@@ -1,16 +1,13 @@
 <div align="center">
 
-# <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY2QjZCO3N0b3Atb3BhY2l0eToxIiAvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEQ5RkY7c3RvcC1vcGFjaXR5OjEiIC8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+CjxwYXRoIGQ9Ik0xNiAyMEgzMlYzNkgxNlYyMFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KPHA+dGggZD0iTTIwIDQ0SzM2VjUySDIwVjQ0WiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNyIvPgo8cGF0aCBkPSJNNDAgMjRINDhWNDBINDBWMjRaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC44Ii8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNDQiIHI9IjQiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KPHA+dGggZD0iTTEyIDEyTDUyIDUyIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuMyIvPgo8L3N2Zz4K" alt="VideoRAG Logo" style="vertical-align: middle; margin-right: 12px;"> VideoRAG: Infinite Context Video AI
+# VideoRAG: Infinite Context Video AI
 
 <a href='https://arxiv.org/abs/2502.01549'><img src='https://img.shields.io/badge/arXiv-2502.01549-b31b1b'></a>
 <a href='https://github.com/HKUDS/VideoRAG/issues/1'><img src='https://img.shields.io/badge/群聊-wechat-green'></a>
 <a href='https://discord.gg/ZzU55kz3'><img src='https://discordapp.com/api/guilds/1296348098003734629/widget.png?style=shield'></a>
 
-**🔮 Neural-Enhanced Video Intelligence | 🌐 Infinite Context Processing | 🚀 Next-Gen RAG Architecture**
-
 </div>
 
----
 
 <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=32&color=%23FF6B6B&center=true&vCenter=true&width=700&height=60&lines=%E2%9A%A1+Extreme+Long-Context+Processing;%F0%9F%9A%80+Multi-Modal+Knowledge+Indexing;%F0%9F%94%AE+Neural+Video+Understanding;%F0%9F%8E%AC+134%2B+Hours+Benchmark" alt="VideoRAG Features Animation"/>
@@ -36,13 +33,7 @@
 - [🛠️ Installation](#️-installation)
 - [🚀 Quick Start](#-quick-start)
 - [🧪 Experiments](#-experiments)
-  - [LongerVideos](#longervideos)
-  - [Process LongerVideos with VideoRAG](#process-longervideos-with-videorag)
-  - [Evaluation](#evaluation)
-    - [Win-Rate Comparison](#win-rate-comparison)
-    - [Quantitative Comparison](#quantitative-comparison)
 - [🦙 Ollama Support](#-ollama-support)
-  - [Jupyter Notebook](#jupyter-notebook)
 - [📖 Citation](#-citation)
 - [🙏 Acknowledgement](#-acknowledgement)
 
