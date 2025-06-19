@@ -8,8 +8,6 @@
 
 **🔮 Neural-Enhanced Video Intelligence | 🌐 Infinite Context Processing | 🚀 Next-Gen RAG Architecture**
 
-[English](README.md) | [中文](README_CN.md)
-
 </div>
 
 
