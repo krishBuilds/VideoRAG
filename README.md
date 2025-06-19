@@ -1,9 +1,22 @@
-# VideoRAG: Retrieval-Augmented Generation with Extreme Long-Context Videos
+<div align="center">
+
+# <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgo8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY2QjZCO3N0b3Atb3BhY2l0eToxIiAvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMEQ5RkY7c3RvcC1vcGFjaXR5OjEiIC8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+CjxwYXRoIGQ9Ik0xNiAyMEgzMlYzNkgxNlYyMFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KPHA+dGggZD0iTTIwIDQ0SzM2VjUySDIwVjQ0WiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNyIvPgo8cGF0aCBkPSJNNDAgMjRINDhWNDBINDBWMjRaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC44Ii8+CjxjaXJjbGUgY3g9IjQ0IiBjeT0iNDQiIHI9IjQiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KPHA+dGggZD0iTTEyIDEyTDUyIDUyIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuMyIvPgo8L3N2Zz4K" alt="VideoRAG Logo" style="vertical-align: middle; margin-right: 12px;"> VideoRAG: Infinite Context Video AI
 
 <a href='https://arxiv.org/abs/2502.01549'><img src='https://img.shields.io/badge/arXiv-2502.01549-b31b1b'></a>
 <a href='https://github.com/HKUDS/VideoRAG/issues/1'><img src='https://img.shields.io/badge/群聊-wechat-green'></a>
 <a href='https://discord.gg/ZzU55kz3'><img src='https://discordapp.com/api/guilds/1296348098003734629/widget.png?style=shield'></a>
 
+**🔮 Neural-Enhanced Video Intelligence | 🌐 Infinite Context Processing | 🚀 Next-Gen RAG Architecture**
+
+</div>
+
+---
+
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=32&color=%23FF6B6B&center=true&vCenter=true&width=700&height=60&lines=%E2%9A%A1+Extreme+Long-Context+Processing;%F0%9F%9A%80+Multi-Modal+Knowledge+Indexing;%F0%9F%94%AE+Neural+Video+Understanding;%F0%9F%8E%AC+134%2B+Hours+Benchmark" alt="VideoRAG Features Animation"/>
+</div>
+
+<br/>
 
 <img src='VideoRAG_cover.png' />
 
@@ -17,7 +30,23 @@
 
  In this paper, we proposed a retrieval-augmented generation framework specifically designed for processing and understanding **extremely long-context videos**.
 
-## VideoRAG Framework
+## 📋 Table of Contents
+
+- [⚡ VideoRAG Framework](#-videorag-framework)
+- [🛠️ Installation](#️-installation)
+- [🚀 Quick Start](#-quick-start)
+- [🧪 Experiments](#-experiments)
+  - [LongerVideos](#longervideos)
+  - [Process LongerVideos with VideoRAG](#process-longervideos-with-videorag)
+  - [Evaluation](#evaluation)
+    - [Win-Rate Comparison](#win-rate-comparison)
+    - [Quantitative Comparison](#quantitative-comparison)
+- [🦙 Ollama Support](#-ollama-support)
+  - [Jupyter Notebook](#jupyter-notebook)
+- [📖 Citation](#-citation)
+- [🙏 Acknowledgement](#-acknowledgement)
+
+## ⚡ VideoRAG Framework
 
 <p align="center">
 <img src="VideoRAG.png" alt="VideoRAG" />
@@ -37,65 +66,95 @@ VideoRAG introduces a novel dual-channel architecture that synergistically combi
 📚 **The New Established LongerVideos Benchmark**
 - The new established LongerVideos Benchmark features over 160 Videos totaling 134+ Hours across lectures, documentaries, and entertainment 🎬
 
-## Installation
+## 🛠️ Installation
+
+### 📦 Environment Setup
 
 To utilize VideoRAG, please first create a conda environment with the following commands:
+
 ```bash
+# Create and activate conda environment
 conda create --name videorag python=3.11
 conda activate videorag
+```
 
+### 📚 Core Dependencies
+
+Install the essential packages for VideoRAG:
+
+```bash
+# Core numerical and deep learning libraries
 pip install numpy==1.26.4
 pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2
 pip install accelerate==0.30.1
 pip install bitsandbytes==0.43.1
+
+# Video processing utilities
 pip install moviepy==1.0.3
 pip install git+https://github.com/facebookresearch/pytorchvideo.git@28fe037d212663c6a24f373b94cc5d478c8c1a1d
+
+# Multi-modal and vision libraries
 pip install timm ftfy regex einops fvcore eva-decord==0.6.1 iopath matplotlib types-regex cartopy
+
+# Audio processing and vector databases
 pip install ctranslate2==4.4.0 faster_whisper==1.0.3 neo4j hnswlib xxhash nano-vectordb
+
+# Language models and utilities
 pip install transformers==4.37.1
 pip install tiktoken openai tenacity
+```
 
-# Install ImageBind using the provided code in this repository, where we have removed the requirements.txt to avoid environment conflicts.
+### 🔧 ImageBind Installation
+
+Install ImageBind using the provided code in this repository:
+
+```bash
 cd ImageBind
 pip install .
 ```
 
-Then, please download the necessary checkpoints in **the repository's root folder** for MiniCPM-V, Whisper, and ImageBind as follows:
+### 📥 Model Checkpoints
+
+Download the necessary checkpoints in **the repository's root folder** for MiniCPM-V, Whisper, and ImageBind:
+
 ```bash
-# Make sure you have git-lfs installed (https://git-lfs.com)
+# Ensure git-lfs is installed
 git lfs install
 
-# minicpm-v
+# Download MiniCPM-V model
 git lfs clone https://huggingface.co/openbmb/MiniCPM-V-2_6-int4
 
-# whisper
+# Download Whisper model
 git lfs clone https://huggingface.co/Systran/faster-distil-whisper-large-v3
 
-# imagebind
+# Download ImageBind checkpoint
 mkdir .checkpoints
 cd .checkpoints
 wget https://dl.fbaipublicfiles.com/imagebind/imagebind_huge.pth
 cd ../
 ```
 
+### 📁 Final Directory Structure
+
 Your final directory structure after downloading all checkpoints should look like this:
+
 ```shell
-VideoRAG
-├── .checkpoints
-├── faster-distil-whisper-large-v3
-├── ImageBind
+VideoRAG/
+├── .checkpoints/
+├── faster-distil-whisper-large-v3/
+├── ImageBind/
 ├── LICENSE
-├── longervideos
-├── MiniCPM-V-2_6-int4
+├── longervideos/
+├── MiniCPM-V-2_6-int4/
 ├── README.md
-├── reproduce
-├── notesbooks
-├── videorag
+├── reproduce/
+├── notesbooks/
+├── videorag/
 ├── VideoRAG_cover.png
 └── VideoRAG.png
 ```
 
-## Quick Start
+## 🚀 Quick Start
 
 VideoRAG is capable of extracting knowledge from multiple videos and answering queries based on those videos. Now, try VideoRAG with your own videos 🤗.
 
@@ -163,7 +222,7 @@ if __name__ == '__main__':
     print(response)
 ```
 
-## Experiments
+## 🧪 Experiments
 
 ### LongerVideos
 We constructed the LongerVideos benchmark to evaluate the model's performance in comprehending multiple long-context videos and answering open-ended queries. All the videos are open-access videos on YouTube, and we record the URLs of the collections of videos as well as the corresponding queries in the [JSON](https://github.com/HKUDS/VideoRAG/longervideos/dataset.json) file.
@@ -245,7 +304,7 @@ python batch_quant_eval_parse.py
 python batch_quant_eval_calculate.py
 ```
 
-## Ollama Support
+## 🦙 Ollama Support
 
 This project also supports ollama.  To use, edit the ollama_config in [_llm.py](https://github.com/HKUDS/VideoRAG/blob/main/videorag/_llm.py).
 Adjust the paramters of the models being used
@@ -275,7 +334,7 @@ And specify the config when creating your VideoRag instance
 To  test the solution on a single video, just load the notebook in the [notebook folder](VideoRAG/nodebooks) and
 update the paramters to fit your situation.
 
-## Citation
+## 📖 Citation
 If you find this work is helpful to your research, please consider citing our paper:
 ```bibtex
 @article{VideoRAG,
@@ -286,8 +345,10 @@ If you find this work is helpful to your research, please consider citing our pa
 }
 ```
 
-**Thank you for your interest in our work!**
+## 🙏 Acknowledgement
 
-### Acknowledgement
-You may refer to related work that serves as foundations for our framework and code repository, 
-[nano-graphrag](https://github.com/gusye1234/nano-graphrag) and [LightRAG](https://github.com/HKUDS/LightRAG). Thanks for their wonderful works.
+We extend our heartfelt gratitude to the open-source community and the foundational projects that made VideoRAG possible. Special thanks to the creators and maintainers of [nano-graphrag](https://github.com/gusye1234/nano-graphrag) and [LightRAG](https://github.com/HKUDS/LightRAG) for their pioneering work in graph-based retrieval systems.
+
+Our framework builds upon the collective wisdom of these exceptional projects, and we are honored to contribute to the advancement of multimodal AI research. We also acknowledge the broader research community for their continued dedication to pushing the boundaries of video understanding and retrieval-augmented generation.
+
+**🌟 Thank you for your interest in our work! Together, we're shaping the future of intelligent video processing. 🌟**
