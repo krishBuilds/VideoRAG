@@ -344,4 +344,4 @@ We extend our heartfelt gratitude to the open-source community and the foundatio
 
 Our framework builds upon the collective wisdom of these exceptional projects, and we are honored to contribute to the advancement of multimodal AI research. We also acknowledge the broader research community for their continued dedication to pushing the boundaries of video understanding and retrieval-augmented generation.
 
-**🌟 Thank you for your interest in our work! Together, we're shaping the future of intelligent video processing. 🌟**
+**🌟 Thank you for your interest in our work! Together, we're shaping the future of intelligent video AI. 🌟**
