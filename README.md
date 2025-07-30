@@ -1,334 +1,147 @@
 <div align="center">
+  <picture>
+      <img src="Vimo-desktop/figures/Vimo-logo.png" width="30%" alt="Vimo: Chat with Your Videos">
+  </picture>
+  
+  <h1>Vimo: Chat with Your Videos</h1>
+  
+  <a href='https://arxiv.org/abs/2502.01549'><img src='https://img.shields.io/badge/arXiv-2502.01549-b31b1b'></a>
+  <a href='https://github.com/HKUDS/VideoRAG/issues/1'><img src='https://img.shields.io/badge/群聊-wechat-green'></a>
+  <a href='https://discord.gg/ZzU55kz3'><img src='https://discordapp.com/api/guilds/1296348098003734629/widget.png?style=shield'></a>
+  [![Platform](https://img.shields.io/badge/platform-macOS%20|%20Windows%20|%20Linux-lightgrey.svg)]()
 
-# VideoRAG: Infinite Context Video AI
+  **🎬 Intelligent Video Conversations | Powered by Advanced AI | Extreme Long-Context Processing**
 
-<a href='https://arxiv.org/abs/2502.01549'><img src='https://img.shields.io/badge/arXiv-2502.01549-b31b1b'></a>
-<a href='https://github.com/HKUDS/VideoRAG/issues/1'><img src='https://img.shields.io/badge/群聊-wechat-green'></a>
-<a href='https://discord.gg/ZzU55kz3'><img src='https://discordapp.com/api/guilds/1296348098003734629/widget.png?style=shield'></a>
-
-**🔮 Neural-Enhanced Video Intelligence | 🌐 Infinite Context Processing | 🚀 Next-Gen RAG Architecture**
-
-</div>
-
-
-<div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=32&color=%23FF6B6B&center=true&vCenter=true&width=700&height=60&lines=%E2%9A%A1+Extreme+Long-Context+Processing;%F0%9F%9A%80+Multi-Modal+Knowledge+Indexing;%F0%9F%94%AE+Neural+Video+Understanding;%F0%9F%8E%AC+134%2B+Hours+Benchmark" alt="VideoRAG Features Animation"/>
 </div>
 
 <br/>
 
-<img src='VideoRAG_cover.png' />
+<img src='VideoRAG-algorithm/VideoRAG_cover.png' />
 
- This is the PyTorch implementation for VideoRAG proposed in this paper:
+Vimo is a revolutionary desktop application that lets you **chat with your videos** using cutting-edge AI technology. Built on the powerful [VideoRAG framework](https://arxiv.org/abs/2502.01549), Vimo can understand and analyze videos of any length - from short clips to hundreds of hours of content - and answer your questions with remarkable accuracy.
 
- >**VideoRAG: Retrieval-Augmented Generation with Extreme Long-Context Videos**  
- >Xubin Ren*, Lingrui Xu*, Long Xia, Shuaiqiang Wang, Dawei Yin, Chao Huang†
+## 🌟 Why Vimo?
 
-\* denotes equal contribution.
-† denotes corresponding author
+**For Video Enthusiasts & Professionals:**
+- **Effortless Video Analysis**: Upload any video and start asking questions immediately
+- **Natural Conversations**: Chat with your videos as if talking to a human expert
+- **No Length Limits**: Process everything from 30-second clips to 100+ hour documentaries
+- **Deep Understanding**: Combines visual content, audio, and context for comprehensive answers
 
- In this paper, we proposed a retrieval-augmented generation framework specifically designed for processing and understanding **extremely long-context videos**.
+**For Researchers & Developers:**
+- **State-of-the-Art Algorithm**: Built on VideoRAG, featuring graph-driven knowledge indexing
+- **Benchmark Performance**: Evaluated on 134+ hours across lectures, documentaries, and entertainment
+- **Open Source**: Full access to VideoRAG implementation and research findings
+- **Scalable Architecture**: Efficient processing with single GPU (RTX 3090) capability
 
 ## 📋 Table of Contents
 
-- [⚡ VideoRAG Framework](#-videorag-framework)
-- [🛠️ Installation](#️-installation)
 - [🚀 Quick Start](#-quick-start)
-- [🧪 Experiments](#-experiments)
-- [🦙 Ollama Support](#-ollama-support)
+- [✨ Key Features](#-key-features)
+- [🔬 VideoRAG Algorithm](#-videorag-algorithm)
+- [🛠️ Development Setup](#️-development-setup)
+- [🧪 Benchmarks & Evaluation](#-benchmarks--evaluation)
 - [📖 Citation](#-citation)
+- [🤝 Contributing](#-contributing)
 - [🙏 Acknowledgement](#-acknowledgement)
 
-## ⚡ VideoRAG Framework
+## 🚀 Quick Start of Vimo
 
-<p align="center">
-<img src="VideoRAG.png" alt="VideoRAG" />
-</p>
-
-VideoRAG introduces a novel dual-channel architecture that synergistically combines graph-driven textual knowledge grounding for modeling cross-video semantic relationships with hierarchical multimodal context encoding to preserve spatiotemporal visual patterns, enabling unbounded-length video understanding through dynamically constructed knowledge graphs that maintain semantic coherence across multi-video contexts while optimizing retrieval efficiency via adaptive multimodal fusion mechanisms.
-
-💻 **Efficient Extreme Long-Context Video Processing**
-- Leveraging a Single NVIDIA RTX 3090 GPU (24G) to comprehend Hundreds of Hours of video content 💪
-
-🗃️ **Structured Video Knowledge Indexing**
-- Multi-Modal Knowledge Indexing Framework distills hundreds of hours of video into a concise, structured knowledge graph 🗂️
-
-🔍 **Multi-Modal Retrieval for Comprehensive Responses**
-- Multi-Modal Retrieval Paradigm aligns textual semantics and visual content to identify the most relevant video for comprehensive responses 💬
-
-📚 **The New Established LongerVideos Benchmark**
-- The new established LongerVideos Benchmark features over 160 Videos totaling 134+ Hours across lectures, documentaries, and entertainment 🎬
-
-## 🛠️ Installation
-
-### 📦 Environment Setup
-
-To utilize VideoRAG, please first create a conda environment with the following commands:
-
-```bash
-# Create and activate conda environment
-conda create --name videorag python=3.11
-conda activate videorag
-```
-
-### 📚 Core Dependencies
-
-Install the essential packages for VideoRAG:
-
-```bash
-# Core numerical and deep learning libraries
-pip install numpy==1.26.4
-pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2
-pip install accelerate==0.30.1
-pip install bitsandbytes==0.43.1
-
-# Video processing utilities
-pip install moviepy==1.0.3
-pip install git+https://github.com/facebookresearch/pytorchvideo.git@28fe037d212663c6a24f373b94cc5d478c8c1a1d
-
-# Multi-modal and vision libraries
-pip install timm ftfy regex einops fvcore eva-decord==0.6.1 iopath matplotlib types-regex cartopy
-
-# Audio processing and vector databases
-pip install ctranslate2==4.4.0 faster_whisper==1.0.3 neo4j hnswlib xxhash nano-vectordb
-
-# Language models and utilities
-pip install transformers==4.37.1
-pip install tiktoken openai tenacity
-```
-
-### 🔧 ImageBind Installation
-
-Install ImageBind using the provided code in this repository:
-
-```bash
-cd ImageBind
-pip install .
-```
-
-### 📥 Model Checkpoints
-
-Download the necessary checkpoints in **the repository's root folder** for MiniCPM-V, Whisper, and ImageBind:
-
-```bash
-# Ensure git-lfs is installed
-git lfs install
-
-# Download MiniCPM-V model
-git lfs clone https://huggingface.co/openbmb/MiniCPM-V-2_6-int4
-
-# Download Whisper model
-git lfs clone https://huggingface.co/Systran/faster-distil-whisper-large-v3
-
-# Download ImageBind checkpoint
-mkdir .checkpoints
-cd .checkpoints
-wget https://dl.fbaipublicfiles.com/imagebind/imagebind_huge.pth
-cd ../
-```
-
-### 📁 Final Directory Structure
-
-Your final directory structure after downloading all checkpoints should look like this:
-
-```shell
-VideoRAG/
-├── .checkpoints/
-├── faster-distil-whisper-large-v3/
-├── ImageBind/
-├── LICENSE
-├── longervideos/
-├── MiniCPM-V-2_6-int4/
-├── README.md
-├── reproduce/
-├── notesbooks/
-├── videorag/
-├── VideoRAG_cover.png
-└── VideoRAG.png
-```
-
-## 🚀 Quick Start
-
-VideoRAG is capable of extracting knowledge from multiple videos and answering queries based on those videos. Now, try VideoRAG with your own videos 🤗.
+### Option 1: Download Vimo App (Coming Soon)
 
 > [!NOTE]
-> Currently, VideoRAG has only been tested in an English environment. To process videos in multiple languages, it is recommended to modify the  ```WhisperModel``` in [asr.py](https://github.com/HKUDS/VideoRAG/blob/main/videorag/_videoutil/asr.py). For more details, please refer to [faster-whisper](https://github.com/systran/faster-whisper).
+> We are preparing the **Beta release** for macOS Apple Silicon first, with Windows and Linux versions coming soon!
 
-**At first**, let the VideoRAG extract and indexing the knowledge from given videos (Only one GPU with 24GB of memory is sufficient, such as the RTX 3090):
-```python
-import os
-import logging
-import warnings
-import multiprocessing
+<div align="left">
+  <a href="https://github.com/HKUDS/Vimo/releases">
+    <img src="https://img.shields.io/badge/Coming%20Soon-Mac%20Download-007ACC?style=for-the-badge&logo=apple&logoColor=white" alt="Coming Soon - Mac Release" height="50">
+  </a>
+</div>
 
-warnings.filterwarnings("ignore")
-logging.getLogger("httpx").setLevel(logging.WARNING)
+### Option 2: Run from Source Code
 
-# Please enter your openai key
-os.environ["OPENAI_API_KEY"] = ""
+For detailed setup instructions:
 
-from videorag._llm import openai_4o_mini_config
-from videorag import VideoRAG, QueryParam
+- **Vimo Desktop App**: See [Vimo-desktop](Vimo-desktop) for complete installation and configuration steps
 
+**Quick Overview:**
+1. Set up the Python backend environment and start the VideoRAG server
+2. Launch the Electron frontend application
+3. Start chatting with your videos!
 
-if __name__ == '__main__':
-    multiprocessing.set_start_method('spawn')
+## ✨ Key Features
 
-    # Please enter your video file path in this list; there is no limit on the length.
-    # Here is an example; you can use your own videos instead.
-    video_paths = [
-        'movies/Iron-Man.mp4',
-        'movies/Spider-Man.mkv',
-    ]
-    videorag = VideoRAG(llm=openai_4o_mini_config, working_dir=f"./videorag-workdir")
-    videorag.insert_video(video_path_list=video_paths)
-```
+### For Everyone
+- **Drag & Drop Upload**: Simply drag video files into Vimo
+- **Smart Conversations**: Ask questions in natural language
+- **Multi-Format Support**: Works with MP4, MKV, AVI, and more
+- **Cross-Platform**: Available on macOS, Windows, and Linux
 
-**Then**, ask any questions about the videos! Here is an exmaple:
-```python
-import os
-import logging
-import warnings
-import multiprocessing
+### For Power Users
+- **Extreme Long Videos**: Process videos up to hundreds of hours
+- **Multi-Video Analysis**: Compare and analyze multiple videos simultaneously
+- **Advanced Retrieval**: Find specific moments and scenes with precision
+- **Export Capabilities**: Save insights and references for later use
 
-warnings.filterwarnings("ignore")
-logging.getLogger("httpx").setLevel(logging.WARNING)
+### For Researchers
+- **VideoRAG Framework**: Access to cutting-edge retrieval-augmented generation
+- **Benchmark Dataset**: LongerVideos benchmark with 134+ hours of content
+- **Performance Metrics**: Detailed evaluation against existing methods
+- **Extensible Architecture**: Build upon our open-source foundation
 
-# Please enter your openai key
-os.environ["OPENAI_API_KEY"] = ""
+## 🔬 VideoRAG Algorithm
 
-from videorag._llm import *
-from videorag import VideoRAG, QueryParam
+<p align="center">
+<img src="VideoRAG-algorithm/VideoRAG.png" alt="VideoRAG Architecture" width="80%" />
+</p>
 
+VideoRAG introduces a novel dual-channel architecture that combines:
 
-if __name__ == '__main__':
-    multiprocessing.set_start_method('spawn')
+- **Graph-Driven Knowledge Indexing**: Multi-modal knowledge graphs for structured video understanding
+- **Hierarchical Context Encoding**: Preserves spatiotemporal visual patterns across long sequences  
+- **Adaptive Retrieval**: Dynamic retrieval mechanisms optimized for video content
+- **Cross-Video Understanding**: Semantic relationship modeling across multiple videos
 
-    query = 'What is the relationship between Iron Man and Spider-Man? How do they meet, and how does Iron Man help Spider-Man?'
-    param = QueryParam(mode="videorag")
-    # if param.wo_reference = False, VideoRAG will add reference to video clips in the response
-    param.wo_reference = True
+### Technical Highlights
 
-    videorag = videorag = VideoRAG(llm=openai_4o_mini_config, working_dir=f"./videorag-workdir")
-    videorag.load_caption_model(debug=False)
-    response = videorag.query(query=query, param=param)
-    print(response)
-```
+- **Efficient Processing**: Handle hundreds of hours on a single RTX 3090 (24GB)
+- **Structured Indexing**: Distill long videos into concise knowledge representations
+- **Multi-Modal Retrieval**: Align textual queries with visual and audio content
+- **LongerVideos Benchmark**: 160+ videos, 134+ hours across diverse domains
 
-## 🧪 Experiments
+### Performance Comparison
 
-### LongerVideos
-We constructed the LongerVideos benchmark to evaluate the model's performance in comprehending multiple long-context videos and answering open-ended queries. All the videos are open-access videos on YouTube, and we record the URLs of the collections of videos as well as the corresponding queries in the [JSON](https://github.com/HKUDS/VideoRAG/longervideos/dataset.json) file.
+Our VideoRAG algorithm significantly outperforms existing methods in long-context video understanding:
 
-| Video Type       | #video list | #video | #query | #avg. queries per list | #overall duration      |
-|------------------|------------:|-------:|-------:|-----------------------:|-------------------------|
-| **Lecture**      | 12          | 135    | 376    | 31.3                   | ~ 64.3 hours           |
-| **Documentary**  | 5           | 12     | 114    | 22.8                   | ~ 28.5 hours           |
-| **Entertainment**| 5           | 17     | 112    | 22.4                   | ~ 41.9 hours           |
-| **All**          | 22          | 164    | 602    | 27.4                   | ~ 134.6 hours          |
+<div align="center">
+  <img src="Vimo-desktop/figures/table.png" width="80%" alt="Performance Comparison" />
+</div>
 
-### Process LongerVideos with VideoRAG
+### Experiments and Evaluation
 
-Here are the commands you can refer to for preparing the videos used in LongerVideos.
+See [VideoRAG-algorithm](VideoRAG-algorithm) for detailed development setup including:
+- Conda environment creation
+- Model checkpoints download
+- Dependencies installation
+- Evaluation scripts
 
-```shell
-cd longervideos
-python prepare_data.py # create collection folders
-sh download.sh # obtain videos
-```
+## 🧪 LongerVideos Benchmark
 
-Then, you can run the following example command to process and answer queries for LongerVideos with VideoRAG:
+We created the LongerVideos benchmark to evaluate long-context video understanding:
 
-```shell
-# Please enter your openai_key in line 19 at first
-python videorag_longervideos.py --collection 4-rag-lecture --cuda 0
-```
+| Video Type       | #Collections | #Videos | #Queries | Avg. Duration |
+|------------------|-------------|---------|----------|---------------|
+| **Lectures**     | 12          | 135     | 376      | ~64.3 hours   |
+| **Documentaries**| 5           | 12      | 114      | ~28.5 hours   |
+| **Entertainment**| 5           | 17      | 112      | ~41.9 hours   |
+| **Total**        | 22          | 164     | 602      | ~134.6 hours  |
 
-### Evaluation
-
-We conduct win-rate comparisons as well as quantitative comparisons with RAG-based baselines and long-context video understanding methods separately. **NaiveRAG, GraphRAG and LightRAG** are implemented using the `nano-graphrag` library, which is consistent with our VideoRAG, ensuring a fair comparison.
-
-In this part, we directly provided the **answers from all the methods** (including VideoRAG) as well as the evaluation codes for experiment reproduction. Please utilize the following commands to download the answers:
-
-```shell
-cd reproduce
-wget https://archive.org/download/videorag/all_answers.zip
-unzip all_answers
-```
-
-#### Win-Rate Comparison
-
-We conduct the win-rate comparison with RAG-based baselines. To reproduce the results, please follow these steps:
-
-```shell
-cd reproduce/winrate_comparison
-
-# First Step: Upload the batch request to OpenAI (remember to enter your key in the file, same for the following steps).
-python batch_winrate_eval_upload.py
-
-# Second Step: Download the results. Please enter the batch ID and then the output file ID in the file. Generally, you need to run this twice: first to obtain the output file ID, and then to download it.
-python batch_winrate_eval_download.py
-
-# Third Step: Parsing the results. Please the output file ID in the file.
-python batch_winrate_eval_parse.py
-
-# Fourth Step: Calculate the results. Please enter the parsed result file name in the file.
-python batch_winrate_eval_calculate.py
-
-```
-
-#### Quantitative Comparison
-
-We conduct a quantitative comparison, which extends the win-rate comparison by assigning a 5-point score to long-context video understanding methods. We use the answers from NaiveRAG as the baseline response for scoring each query. To reproduce the results, please follow these steps:
-
-```shell
-cd reproduce/quantitative_comparison
-
-# First Step: Upload the batch request to OpenAI (remember to enter your key in the file, same for the following steps).
-python batch_quant_eval_upload.py
-
-# Second Step: Download the results. Please enter the batch ID and then the output file ID in the file. Generally, you need to run this twice: first to obtain the output file ID, and then to download it.
-python batch_quant_eval_download.py
-
-# Third Step: Parsing the results. Please the output file ID in the file.
-python batch_quant_eval_parse.py
-
-# Fourth Step: Calculate the results. Please enter the parsed result file name in the file.
-python batch_quant_eval_calculate.py
-```
-
-## 🦙 Ollama Support
-
-This project also supports ollama.  To use, edit the ollama_config in [_llm.py](https://github.com/HKUDS/VideoRAG/blob/main/videorag/_llm.py).
-Adjust the paramters of the models being used
-
-```
-ollama_config = LLMConfig(
-    embedding_func_raw = ollama_embedding,
-    embedding_model_name = "nomic-embed-text",
-    embedding_dim = 768,
-    embedding_max_token_size=8192,
-    embedding_batch_num = 1,
-    embedding_func_max_async = 1,
-    query_better_than_threshold = 0.2,
-    best_model_func_raw = ollama_complete ,
-    best_model_name = "gemma2:latest", # need to be a solid instruct model
-    best_model_max_token_size = 32768,
-    best_model_max_async  = 1,
-    cheap_model_func_raw = ollama_mini_complete,
-    cheap_model_name = "olmo2",
-    cheap_model_max_token_size = 32768,
-    cheap_model_max_async = 1
-)
-```
-And specify the config when creating your VideoRag instance
-
-### Jupyter Notebook
-To  test the solution on a single video, just load the notebook in the [notebook folder](VideoRAG/nodebooks) and
-update the paramters to fit your situation.
+For detailed evaluation instructions and reproduction scripts, see [VideoRAG-algorithm/reproduce](VideoRAG-algorithm/reproduce).
 
 ## 📖 Citation
-If you find this work is helpful to your research, please consider citing our paper:
+
+If you find Vimo or VideoRAG helpful in your research, please cite our paper:
+
 ```bibtex
 @article{VideoRAG,
   title={VideoRAG: Retrieval-Augmented Generation with Extreme Long-Context Videos},
@@ -338,10 +151,30 @@ If you find this work is helpful to your research, please consider citing our pa
 }
 ```
 
+## 🤝 Contributing
+
+We welcome contributions from the community! Whether you're:
+
+- **Reporting bugs** or suggesting features for Vimo
+- **Improving VideoRAG algorithms** or adding new capabilities  
+- **Enhancing documentation** or creating tutorials
+- **Designing UI/UX improvements** for better user experience
+
+Feel free to submit issues and pull requests. Together, we're building the future of intelligent video interaction!
+
 ## 🙏 Acknowledgement
 
-We extend our heartfelt gratitude to the open-source community and the foundational projects that made VideoRAG possible. Special thanks to the creators and maintainers of [nano-graphrag](https://github.com/gusye1234/nano-graphrag) and [LightRAG](https://github.com/HKUDS/LightRAG) for their pioneering work in graph-based retrieval systems.
+Vimo builds upon the incredible work of the open-source community:
 
-Our framework builds upon the collective wisdom of these exceptional projects, and we are honored to contribute to the advancement of multimodal AI research. We also acknowledge the broader research community for their continued dedication to pushing the boundaries of video understanding and retrieval-augmented generation.
+- **[VideoRAG](https://arxiv.org/abs/2502.01549)**: The core algorithm powering Vimo's intelligence
+- **[nano-graphrag](https://github.com/gusye1234/nano-graphrag)** & **[LightRAG](https://github.com/HKUDS/LightRAG)**: Graph-based retrieval foundations
+- **[ImageBind](https://github.com/facebookresearch/ImageBind)**: Multi-modal representation learning
+- **[uitars-desktop](https://github.com/bytedance/UI-TARS-desktop)**: Desktop application architecture inspiration
 
-**🌟 Thank you for your interest in our work! Together, we're shaping the future of intelligent video AI. 🌟**
+**🌟 Transform how you interact with videos. Start your journey with Vimo today!**
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ by the VideoRAG@HKUDS team.</sub>
+</div> 
