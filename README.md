@@ -20,6 +20,17 @@
 
 Vimo is a revolutionary desktop application that lets you **chat with your videos** using cutting-edge AI technology. Built on the powerful [VideoRAG framework](https://arxiv.org/abs/2502.01549), Vimo can understand and analyze videos of any length - from short clips to hundreds of hours of content - and answer your questions with remarkable accuracy.
 
+### 🎥 Watch Vimo in Action
+
+See how Vimo transforms video interaction with intelligent conversations and deep understanding capabilities.
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=D5vsxcp4QZI">
+    <img src="https://img.youtube.com/vi/D5vsxcp4QZI/maxresdefault.jpg" width="80%" alt="Vimo Introduction Video">
+  </a>
+  <p><em>👆 Click to watch the Vimo demo video</em></p>
+</div>
+
 ## 🌟 Why Vimo?
 
 **For Video Enthusiasts & Professionals:**

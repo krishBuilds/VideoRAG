@@ -21,9 +21,10 @@
 Vimo is a state-of-the-art agentic video understanding platform with intelligent conversational capabilities and comprehensive video analysis. Built upon the advanced [VideoRAG](https://github.com/HKUDS/VideoRAG) technology from HKUDS, Vimo achieves exceptional performance across video comprehension, content extraction, and interactive QA tasks while being meticulously optimized for real-world deployment scenarios.
 
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=T9yo4mY2cms">
-    <img src="https://img.youtube.com/vi/T9yo4mY2cms/maxresdefault.jpg" width="80%" alt="Vimo Introduction Video">
+  <a href="https://www.youtube.com/watch?v=D5vsxcp4QZI">
+    <img src="https://img.youtube.com/vi/D5vsxcp4QZI/maxresdefault.jpg" width="80%" alt="Vimo Introduction Video">
   </a>
+  <p><em>👆 Click to watch the Vimo demo video</em></p>
 </div>
 
 ### Key Features
