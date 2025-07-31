@@ -8,6 +8,7 @@
   <a href='https://arxiv.org/abs/2502.01549'><img src='https://img.shields.io/badge/arXiv-2502.01549-b31b1b'></a>
   <a href='https://github.com/HKUDS/VideoRAG/issues/1'><img src='https://img.shields.io/badge/群聊-wechat-green'></a>
   <a href='https://discord.gg/ZzU55kz3'><img src='https://discordapp.com/api/guilds/1296348098003734629/widget.png?style=shield'></a>
+  <a href='https://www.youtube.com/watch?v=D5vsxcp4QZI'><img src='https://img.shields.io/badge/YouTube-Watch%20Demo-red?style=flat&logo=youtube'></a>
   [![Platform](https://img.shields.io/badge/platform-macOS%20|%20Windows%20|%20Linux-lightgrey.svg)]()
 
   **🎬 Intelligent Video Conversations | Powered by Advanced AI | Extreme Long-Context Processing**
