@@ -31,6 +31,26 @@ See how Vimo transforms video interaction with intelligent conversations and dee
   <p><em>👆 Click to watch the Vimo demo video</em></p>
 </div>
 
+## ✨ Key Features
+
+### For Everyone
+- **Drag & Drop Upload**: Simply drag video files into Vimo
+- **Smart Conversations**: Ask questions in natural language
+- **Multi-Format Support**: Works with MP4, MKV, AVI, and more
+- **Cross-Platform**: Available on macOS, Windows, and Linux
+
+### For Power Users
+- **Extreme Long Videos**: Process videos up to hundreds of hours
+- **Multi-Video Analysis**: Compare and analyze multiple videos simultaneously
+- **Advanced Retrieval**: Find specific moments and scenes with precision
+- **Export Capabilities**: Save insights and references for later use
+
+### For Researchers
+- **VideoRAG Framework**: Access to cutting-edge retrieval-augmented generation
+- **Benchmark Dataset**: LongerVideos benchmark with 134+ hours of content
+- **Performance Metrics**: Detailed evaluation against existing methods
+- **Extensible Architecture**: Build upon our open-source foundation
+  
 ## 🌟 Why Vimo?
 
 **For Video Enthusiasts & Professionals:**
@@ -79,26 +99,6 @@ For detailed setup instructions:
 1. Set up the Python backend environment and start the VideoRAG server
 2. Launch the Electron frontend application
 3. Start chatting with your videos!
-
-## ✨ Key Features
-
-### For Everyone
-- **Drag & Drop Upload**: Simply drag video files into Vimo
-- **Smart Conversations**: Ask questions in natural language
-- **Multi-Format Support**: Works with MP4, MKV, AVI, and more
-- **Cross-Platform**: Available on macOS, Windows, and Linux
-
-### For Power Users
-- **Extreme Long Videos**: Process videos up to hundreds of hours
-- **Multi-Video Analysis**: Compare and analyze multiple videos simultaneously
-- **Advanced Retrieval**: Find specific moments and scenes with precision
-- **Export Capabilities**: Save insights and references for later use
-
-### For Researchers
-- **VideoRAG Framework**: Access to cutting-edge retrieval-augmented generation
-- **Benchmark Dataset**: LongerVideos benchmark with 134+ hours of content
-- **Performance Metrics**: Detailed evaluation against existing methods
-- **Extensible Architecture**: Build upon our open-source foundation
 
 ## 🔬 VideoRAG Algorithm
 
