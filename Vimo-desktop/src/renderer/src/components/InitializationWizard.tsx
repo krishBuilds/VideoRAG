@@ -447,26 +447,34 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
                 <label className="text-sm font-medium text-gray-700 block mb-2">
                   Processing Model
                 </label>
-                <input
-                  type="text"
-                  value="gpt-4o-mini"
-                  readOnly
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-600"
-                />
-                <p className="text-xs text-gray-500 mt-1">Fixed model for high-volume preprocessing</p>
+                <select
+                  value={apiKeySettings.processingModel}
+                  onChange={(e) => handleApiKeyChange('processingModel', e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                >
+                  <option value="gpt-4o-mini">gpt-4o-mini</option>
+                  <option value="gpt-4o">gpt-4o</option>
+                  <option value="gpt-5-mini">gpt-5-mini</option>
+                  <option value="gpt-5">gpt-5</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">Choose model for high-volume preprocessing</p>
               </div>
               
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">
                   Analysis Model
                 </label>
-                <input
-                  type="text"
-                  value="gpt-4o-mini"
-                  readOnly
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-600"
-                />
-                <p className="text-xs text-gray-500 mt-1">Fixed model for detailed analysis tasks</p>
+                <select
+                  value={apiKeySettings.analysisModel}
+                  onChange={(e) => handleApiKeyChange('analysisModel', e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                >
+                  <option value="gpt-4o-mini">gpt-4o-mini</option>
+                  <option value="gpt-4o">gpt-4o</option>
+                  <option value="gpt-5-mini">gpt-5-mini</option>
+                  <option value="gpt-5">gpt-5</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">Choose model for detailed analysis tasks</p>
               </div>
             </div>
           </div>

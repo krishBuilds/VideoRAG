@@ -346,11 +346,11 @@ const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
                       </label>
                       <input
                         type="text"
-                        value="gpt-4o-mini"
+                        value={settings.processingModel}
                         readOnly
                         className="w-full px-3 py-2 text-sm border rounded-md bg-gray-100 text-gray-600"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Fixed model for high-volume preprocessing tasks</p>
+                      <p className="text-xs text-gray-500 mt-1">Current model for high-volume preprocessing tasks</p>
                     </div>
                     
                     <div>
@@ -359,11 +359,11 @@ const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
                       </label>
                       <input
                         type="text"
-                        value="gpt-4o-mini"
+                        value={settings.analysisModel}
                         readOnly
                         className="w-full px-3 py-2 text-sm border rounded-md bg-gray-100 text-gray-600"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Fixed model for detailed analysis tasks</p>
+                      <p className="text-xs text-gray-500 mt-1">Current model for detailed analysis tasks</p>
                     </div>
                   </div>
                 </div>
