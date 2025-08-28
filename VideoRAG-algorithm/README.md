@@ -116,7 +116,7 @@ wget https://dl.fbaipublicfiles.com/imagebind/imagebind_huge.pth
 cd ../
 ```
 
-### 📁 Final Directory Structure
+### 📁 Directory Structure
 
 Your final directory structure after downloading all checkpoints should look like this:
 
