@@ -3,7 +3,9 @@
       <img src="Vimo-desktop/figures/Vimo-logo.png" width="30%" alt="Vimo: Chat with Your Videos">
   </picture>
   
-  <h1>Vimo: Chat with Your Videos</h1>
+  <h1>VideoRAG: Chat with Your Videos</h1><br/>
+
+   <h1>Vimo is the Desktop Application for VideoRAG</h1>
   
   <a href='https://arxiv.org/abs/2502.01549'><img src='https://img.shields.io/badge/arXiv-2502.01549-b31b1b'></a>
   <a href='https://github.com/HKUDS/VideoRAG/issues/1'><img src='https://img.shields.io/badge/群聊-wechat/feishu-green'></a>
