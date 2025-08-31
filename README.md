@@ -3,7 +3,7 @@
       <img src="Vimo-desktop/figures/Vimo-logo.png" width="30%" alt="Vimo: Chat with Your Videos">
   </picture>
   
-  <h1>VideoRAG: Chat with Your Videos</h1><br/>
+  <h1>VideoRAG: Chat with Your Videos</h1>
 
    <h1>Vimo is the Desktop Application for VideoRAG</h1>
   
