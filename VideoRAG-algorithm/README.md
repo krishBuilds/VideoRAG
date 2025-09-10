@@ -84,6 +84,7 @@ pip install ctranslate2==4.4.0 faster_whisper==1.0.3 neo4j hnswlib xxhash nano-v
 # Language models and utilities
 pip install transformers==4.37.1
 pip install tiktoken openai tenacity
+pip install ollama==0.5.3
 ```
 
 ### 🔧 ImageBind Installation
