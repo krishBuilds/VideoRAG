@@ -1,6 +1,6 @@
 <div align="center">
   <picture>
-      <img src="cover.png" width="80%" alt="Vimo: Chat with Your Videos">
+      <img src="cover.png" width="80%" style="border: none; box-shadow: none;" alt="Vimo: Chat with Your Videos">
   </picture>
   
   <h1>
