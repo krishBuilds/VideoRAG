@@ -74,6 +74,7 @@ pip install bitsandbytes==0.43.1
 # Video processing utilities
 pip install moviepy==1.0.3
 pip install git+https://github.com/facebookresearch/pytorchvideo.git@28fe037d212663c6a24f373b94cc5d478c8c1a1d
+pip install --no-deps git+https://github.com/facebookresearch/ImageBind.git@3fcf5c9039de97f6ff5528ee4a9dce903c5979b3
 
 # Multi-modal and vision libraries
 pip install timm ftfy regex einops fvcore eva-decord==0.6.1 iopath matplotlib types-regex cartopy
@@ -85,15 +86,6 @@ pip install ctranslate2==4.4.0 faster_whisper==1.0.3 neo4j hnswlib xxhash nano-v
 pip install transformers==4.37.1
 pip install tiktoken openai tenacity
 pip install ollama==0.5.3
-```
-
-### 🔧 ImageBind Installation
-
-Install ImageBind using the provided code in this repository:
-
-```bash
-cd ImageBind
-pip install .
 ```
 
 ### 📥 Model Checkpoints
@@ -125,7 +117,6 @@ Your final directory structure after downloading all checkpoints should look lik
 VideoRAG/
 ├── .checkpoints/
 ├── faster-distil-whisper-large-v3/
-├── ImageBind/
 ├── LICENSE
 ├── longervideos/
 ├── MiniCPM-V-2_6-int4/

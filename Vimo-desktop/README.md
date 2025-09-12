@@ -81,7 +81,7 @@ pip install numpy==1.26.4 torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2
 # Video processing utilities
 pip install moviepy==1.0.3
 pip install git+https://github.com/Re-bin/pytorchvideo.git@58f50da4e4b7bf0b17b1211dc6b283ba42e522df
-pip install  --no-deps git+https://github.com/facebookresearch/ImageBind.git@3fcf5c9039de97f6ff5528ee4a9dce903c5979b3
+pip install --no-deps git+https://github.com/facebookresearch/ImageBind.git@3fcf5c9039de97f6ff5528ee4a9dce903c5979b3
 
 # Multi-modal and vision libraries
 pip install timm ftfy regex einops fvcore eva-decord==0.6.1 iopath matplotlib types-regex cartopy
