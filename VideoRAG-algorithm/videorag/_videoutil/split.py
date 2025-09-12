@@ -5,6 +5,7 @@ import numpy as np
 from tqdm import tqdm
 from moviepy.video import fx as vfx
 from moviepy.video.io.VideoFileClip import VideoFileClip
+from .._utils import logger
 
 def split_video(
     video_path,
@@ -47,9 +48,12 @@ def split_video(
             # save audio
             audio_file_base_name = segment_index2name[f"{segment_index}"]
             audio_file = f'{audio_file_base_name}.{audio_output_format}'
-            subaudio = subvideo.audio
-            subaudio.write_audiofile(os.path.join(video_segment_cache_path, audio_file), codec='mp3', verbose=False, logger=None)
-            
+            try:
+                subaudio = subvideo.audio
+                subaudio.write_audiofile(os.path.join(video_segment_cache_path, audio_file), codec='mp3', verbose=False, logger=None)
+            except Exception as e:
+                logger.warning(f"Warning: Failed to extract audio for video {video_name} ({start}-{end}). Probably due to lack of audio track.")
+
             segment_index += 1
 
     return segment_index2name, segment_times_info
