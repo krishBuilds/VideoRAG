@@ -1,6 +1,6 @@
 <div align="center">
 
-# VideoRAG: Infinite Context Video AI
+# VideoRAG: Retrieval-Augmented Generation with Extreme Long-Context Videos
 
 </div>
 
