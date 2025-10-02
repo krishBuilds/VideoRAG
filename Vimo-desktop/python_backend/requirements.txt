@@ -1,0 +1,64 @@
+# Core dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Video processing
+opencv-python>=4.8.0
+ffmpeg-python>=0.2.0
+moviepy>=1.0.3
+
+# Scene detection
+transnetv2-pytorch>=0.1.0
+
+# Multi-modal embeddings
+git+https://github.com/facebookresearch/ImageBind.git
+
+# Audio processing (disabled for now)
+# librosa>=0.10.0
+# soundfile>=0.12.0
+
+# Web framework
+flask>=2.3.0
+flask-cors>=4.0.0
+requests>=2.31.0
+certifi>=2023.7.22
+
+# Data handling
+numpy>=1.24.0
+pandas>=2.0.0
+pydantic>=2.4.0
+
+# Storage and database
+hnswlib>=0.7.0
+nanopq>=0.3.0
+neo4j>=5.14.0
+
+# Text processing
+tiktoken>=0.5.0
+transformers>=4.35.0
+
+# Utilities
+aiofiles>=23.2.0
+python-dotenv>=1.0.0
+Pillow>=10.0.0
+tqdm>=4.66.0
+psutil>=5.9.0
+
+# API clients
+openai>=1.3.0
+httpx>=0.25.0
+
+# Async support
+asyncio-throttle>=1.0.0
+
+# Logging and monitoring
+structlog>=23.2.0
+
+# Additional ML utilities
+scikit-learn>=1.3.0
+scipy>=1.11.0
+
+# Process management
+multiprocessing-logging>=0.3.4
+setproctitle>=1.3.0

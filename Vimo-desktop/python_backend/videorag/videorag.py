@@ -50,6 +50,7 @@ from ._videoutil import(
     segment_caption,
     merge_segment_information,
     saving_video_segments,
+    scene_detection_integration,
 )
 
 
@@ -65,11 +66,19 @@ class VideoRAG:
     rough_num_frames_per_segment: int = 5 # frames
     fine_num_frames_per_segment: int = 15 # frames
     video_output_format: str = "mp4"
-    audio_output_format: str = "mp3"
+    audio_output_format: str = "mp3"  # Disabled by default
     audio_sample_rate: int = 16000  # 16kHz
+    enable_audio_processing: bool = False  # Disable audio processing
     video_embedding_batch_num: int = 2
     segment_retrieval_top_k: int = 4
     video_embedding_dim: int = 1024
+
+    # Scene detection
+    enable_scene_detection: bool = False  # Enable TransNetV2 scene detection
+    scene_detection_threshold: float = 0.2
+    min_scene_length_frames: int = 15
+    scene_segment_min_duration: float = 5.0  # Minimum 5 seconds
+    scene_segment_max_duration: float = 12.0  # Maximum 12 seconds
     
     # query
     retrieval_topk_chunks: int = 2
@@ -319,30 +328,65 @@ class VideoRAG:
                 {video_name: video_path}
             ))
             
-            # Step1: split the videos
-            if progress_callback:
-                progress_callback("Video Splitting", f"Splitting video into clips for {video_name}...")
-            
-            segment_index2name, segment_times_info = split_video(
-                video_path, 
-                self.working_dir, 
-                self.video_segment_length,
-                self.rough_num_frames_per_segment,
-                self.audio_output_format,
-                self.audio_sample_rate,  # Pass the sample rate
-            )
+            # Step1: Scene detection (if enabled) or regular splitting
+            if self.enable_scene_detection:
+                if progress_callback:
+                    progress_callback("Scene Detection", f"Detecting scenes in {video_name}...")
+
+                # Use TransNetV2 for scene detection
+                scene_detector = scene_detection_integration.VideoSceneDetector(self.working_dir)
+                scenes = scene_detector.detect_and_save_scenes(
+                    video_path,
+                    video_name,
+                    self.scene_detection_threshold,
+                    self.min_scene_length_frames,
+                    min_duration_sec=self.scene_segment_min_duration,
+                    max_duration_sec=self.scene_segment_max_duration
+                )
+
+                # Extract segments based on scenes
+                segment_info = scene_detector.extract_video_segments(
+                    video_path,
+                    video_name,
+                    scenes
+                )
+
+                segment_index2name = segment_info['segment_index2name']
+                segment_times_info = segment_info['segment_times_info']
+
+                logger.info(f"Used scene detection: {len(scenes)} scenes -> {len(segment_index2name)} segments")
+            else:
+                # Use regular time-based splitting
+                if progress_callback:
+                    progress_callback("Video Splitting", f"Splitting video into clips for {video_name}...")
+
+                segment_index2name, segment_times_info = split_video(
+                    video_path,
+                    self.working_dir,
+                    self.video_segment_length,
+                    self.rough_num_frames_per_segment,
+                    self.audio_output_format,
+                    self.audio_sample_rate,  # Pass the sample rate
+                    self.enable_audio_processing,  # Pass audio processing flag
+                )
             
             # Step2: obtain transcript with ASR (online)
-            if progress_callback:
-                progress_callback("Audio Processing", f"Performing speech recognition for {video_name}...")
-            
-            transcripts = speech_to_text(
-                video_name, 
-                self.working_dir, 
-                segment_index2name,
-                self.audio_output_format,
-                self.safe_config,  # Pass global config dict
-            )
+            transcripts = {}
+            if self.enable_audio_processing:
+                if progress_callback:
+                    progress_callback("Audio Processing", f"Performing speech recognition for {video_name}...")
+
+                transcripts = speech_to_text(
+                    video_name,
+                    self.working_dir,
+                    segment_index2name,
+                    self.audio_output_format,
+                    self.safe_config,  # Pass global config dict
+                )
+            else:
+                logger.info(f"Audio processing disabled for {video_name}, skipping ASR")
+                # Create empty transcripts
+                transcripts = {segment_id: "" for segment_id in segment_index2name.keys()}
             
             # Step3: saving video segments **as well as** obtain caption with vision language model
             if progress_callback:
@@ -356,6 +400,7 @@ class VideoRAG:
                     segment_index2name,
                     segment_times_info,
                     self.video_output_format,
+                    self.enable_audio_processing,  # Pass audio flag
             )
             
             # Pass the complete safe_config to segment_caption for LLM configuration

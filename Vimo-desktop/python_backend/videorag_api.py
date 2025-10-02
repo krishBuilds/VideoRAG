@@ -29,6 +29,9 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 from videorag._llm import LLMConfig, openai_embedding, gpt_complete, dashscope_caption_complete
 from videorag import VideoRAG, QueryParam
 
+# Import upload API endpoints
+import api_upload
+
 # Log recording function
 def log_to_file(message, log_file="log.txt"):
     """Log messages to file"""

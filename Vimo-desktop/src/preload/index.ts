@@ -102,6 +102,7 @@ export interface VideoRAGAPI {
     healthCheck: () => Promise<{ success: boolean; data?: any; error?: string }>;
     initialize: (config: any) => Promise<{ success: boolean; data?: any; error?: string }>;
     uploadVideo: (chatId: string, videoPathList: string[], baseStoragePath: string) => Promise<{ success: boolean; data?: any; error?: string }>;
+    uploadVideoWithConfig: (chatId: string, videoPathList: string[], config: any) => Promise<{ success: boolean; data?: any; error?: string }>;
     getStatus: (chatId: string, type?: string) => Promise<{ success: boolean; data?: any; error?: string }>;
     listIndexed: (chatId: string) => Promise<{ success: boolean; data?: any; error?: string }>;
     sessionStatus: (chatId: string) => Promise<{ success: boolean; data?: any; error?: string }>;
@@ -118,12 +119,46 @@ export interface VideoRAGAPI {
     releaseImageBind: () => Promise<{ success: boolean; data?: any; error?: string }>;
     imagebindStatus: () => Promise<{ success: boolean; data?: any; error?: string }>;
     reinitializeConfig: () => Promise<{ success: boolean; message?: string; error?: string }>;
+    // Model management
+    setupModels: (modelsDir?: string) => Promise<{ success: boolean; data?: any; error?: string }>;
+    getModelsInfo: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    // Scene detection
+    detectScenes: (params: { videoPath: string; threshold?: number; minDuration?: number; maxDuration?: number }) => Promise<{ success: boolean; data?: any; error?: string }>;
+    // Configuration
+    updateConfig: (config: any) => Promise<{ success: boolean; data?: any; error?: string }>;
+    getConfig: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    // Progress tracking
+    setProgress: (taskId: string, progress: number, message: string) => Promise<{ success: boolean; error?: string }>;
+    getProgress: (taskId: string) => Promise<{ success: boolean; data?: any; error?: string }>;
   };
 
   // App control
   app: {
     restart: () => Promise<{ success: boolean; error?: string }>;
     clearConfig: () => Promise<{ success: boolean; error?: string }>;
+  };
+
+  // Remote backend API for RunPod
+  remoteBackend: {
+    uploadVideo: (file: File, config?: any, onProgress?: (progress: { loaded: number; total: number; percentage: number }) => void) => Promise<{
+      success: boolean;
+      fileId?: string;
+      job_id?: string;
+      message?: string;
+      error?: string;
+    }>;
+    getJobStatus: (jobId: string) => Promise<any>;
+    processVideo: (jobId: string, config: {
+      detect_scenes?: boolean;
+      scene_threshold?: number;
+      min_duration?: number;
+      max_duration?: number;
+      generate_embeddings?: boolean;
+      target_fps?: number;
+      [key: string]: any;
+    }) => Promise<any>;
+    checkHealth: () => Promise<boolean>;
+    getBaseUrl: () => string;
   };
 }
 
@@ -186,6 +221,7 @@ const api: VideoRAGAPI = {
     healthCheck: () => ipcRenderer.invoke('videorag:health-check'),
     initialize: (config: any) => ipcRenderer.invoke('videorag:initialize', config),
     uploadVideo: (chatId: string, videoPathList: string[], baseStoragePath: string) => ipcRenderer.invoke('videorag:upload-video', chatId, videoPathList, baseStoragePath),
+    uploadVideoWithConfig: (chatId: string, videoPathList: string[], config: any) => ipcRenderer.invoke('videorag:upload-video-with-config', chatId, videoPathList, config),
     getStatus: (chatId: string, type?: string) => ipcRenderer.invoke('videorag:get-status', chatId, type),
     listIndexed: (chatId: string) => ipcRenderer.invoke('videorag:list-indexed', chatId),
     sessionStatus: (chatId: string) => ipcRenderer.invoke('videorag:session-status', chatId),
@@ -201,13 +237,37 @@ const api: VideoRAGAPI = {
     loadImageBind: () => ipcRenderer.invoke('videorag:load-imagebind'),
     releaseImageBind: () => ipcRenderer.invoke('videorag:release-imagebind'),
     imagebindStatus: () => ipcRenderer.invoke('videorag:imagebind-status'),
-    reinitializeConfig: () => ipcRenderer.invoke('videorag:reinitialize-config')
+    reinitializeConfig: () => ipcRenderer.invoke('videorag:reinitialize-config'),
+    // Model management
+    setupModels: (modelsDir?: string) => ipcRenderer.invoke('videorag:setup-models', modelsDir),
+    getModelsInfo: () => ipcRenderer.invoke('videorag:get-models-info'),
+    // Scene detection
+    detectScenes: (params: { videoPath: string; threshold?: number; minDuration?: number; maxDuration?: number }) =>
+      ipcRenderer.invoke('videorag:detect-scenes', params),
+    // Configuration
+    updateConfig: (config: any) => ipcRenderer.invoke('videorag:update-config', config),
+    getConfig: () => ipcRenderer.invoke('videorag:get-config'),
+    // Progress tracking
+    setProgress: (taskId: string, progress: number, message: string) =>
+      ipcRenderer.invoke('videorag:set-progress', { taskId, progress, message }),
+    getProgress: (taskId: string) => ipcRenderer.invoke('videorag:get-progress', taskId)
   },
 
   // App control
   app: {
     restart: () => ipcRenderer.invoke('app:restart'),
     clearConfig: () => ipcRenderer.invoke('app:clear-config'),
+  },
+
+  // Remote backend API implementation
+  remoteBackend: {
+    uploadVideo: (file: File, config?: any, onProgress?: (progress: { loaded: number; total: number; percentage: number }) => void) =>
+      ipcRenderer.invoke('remote-backend:upload-video', { file, config, onProgress }),
+    getJobStatus: (jobId: string) => ipcRenderer.invoke('remote-backend:get-job-status', jobId),
+    processVideo: (jobId: string, config: any) =>
+      ipcRenderer.invoke('remote-backend:process-video', { jobId, config }),
+    checkHealth: () => ipcRenderer.invoke('remote-backend:check-health'),
+    getBaseUrl: () => ipcRenderer.invoke('remote-backend:get-base-url'),
   },
 };
 

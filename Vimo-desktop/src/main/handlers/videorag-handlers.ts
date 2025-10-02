@@ -441,7 +441,102 @@ async function loadSettingsFromFile(): Promise<{ success: boolean; settings?: an
 
 // IPC handlers setup
 export function setupVideoRAGHandlers() {
-  
+
+  // Model management handlers
+  ipcMain.handle('videorag:setup-models', async (_, modelsDir?: string) => {
+    try {
+      const result = await callVideoRAGAPI('/models/setup', 'POST', {
+        models_dir: modelsDir
+      })
+      return { success: true, data: result }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
+  ipcMain.handle('videorag:get-models-info', async () => {
+    try {
+      const result = await callVideoRAGAPI('/models/info', 'GET')
+      return { success: true, data: result }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
+  // Scene detection handler
+  ipcMain.handle('videorag:detect-scenes', async (_, { videoPath, threshold, minDuration, maxDuration }) => {
+    try {
+      const result = await callVideoRAGAPI('/scene-detection', 'POST', {
+        video_path: videoPath,
+        threshold: threshold || 0.2,
+        min_duration: minDuration || 5.0,
+        max_duration: maxDuration || 12.0
+      })
+      return { success: true, data: result }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
+  // Configuration handlers
+  ipcMain.handle('videorag:update-config', async (_, config) => {
+    try {
+      const result = await callVideoRAGAPI('/config/update', 'POST', config)
+      return { success: true, data: result }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
+  ipcMain.handle('videorag:get-config', async () => {
+    try {
+      const result = await callVideoRAGAPI('/config/get', 'GET')
+      return { success: true, data: result }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
+  // Progress tracking handlers
+  ipcMain.handle('videorag:set-progress', async (_, { taskId, progress, message }) => {
+    try {
+      await callVideoRAGAPI('/progress/set', 'POST', {
+        task_id: taskId,
+        progress: progress,
+        message: message
+      })
+      return { success: true }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
+  ipcMain.handle('videorag:get-progress', async (_, taskId: string) => {
+    try {
+      const result = await callVideoRAGAPI(`/progress/get/${taskId}`, 'GET')
+      return { success: true, data: result }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
+  // Enhanced video upload with configuration
+  ipcMain.handle('videorag:upload-video-with-config', async (_, { chatId, videoPathList, config }) => {
+    try {
+      // First update the configuration
+      await callVideoRAGAPI('/config/update', 'POST', config)
+
+      // Then upload the video
+      const result = await callVideoRAGAPI(`/sessions/${chatId}/videos/upload`, 'POST', {
+        video_path_list: videoPathList
+      })
+
+      return { success: true, data: result }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  })
+
   // Manually start service
   ipcMain.handle('videorag:start-service', async () => {
     try {

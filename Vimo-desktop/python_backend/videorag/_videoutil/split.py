@@ -12,8 +12,9 @@ def split_video(
     working_dir,
     segment_length,
     num_frames_per_segment,
-    audio_output_format='mp3',
-    audio_sample_rate=16000,  # Default 16kHz for speech recognition
+    audio_output_format=None,  # Disabled
+    audio_sample_rate=16000,  # Default 16kHz for speech recognition (unused)
+    enable_audio=False,  # Flag to control audio extraction
 ):  
     unique_timestamp = str(int(time.time() * 1000))
     video_name = os.path.basename(video_path).split('.')[0]
@@ -46,19 +47,22 @@ def split_video(
             segment_index2name[f"{segment_index}"] = f"{unique_timestamp}-{segment_index}-{start}-{end}"
             segment_times_info[f"{segment_index}"] = {"frame_times": frame_times, "timestamp": (start, end)}
             
-            # save audio
-            audio_file_base_name = segment_index2name[f"{segment_index}"]
-            audio_file = f'{audio_file_base_name}.{audio_output_format}'
-            subaudio = subvideo.audio
-            # Convert to mono and set sample rate using ffmpeg parameters
-            subaudio.write_audiofile(
-                os.path.join(video_segment_cache_path, audio_file), 
-                codec='mp3',
-                fps=audio_sample_rate,  # Set sample rate
-                ffmpeg_params=['-ac', '1'],  # Force mono (1 audio channel)
-                verbose=False, 
-                logger=None
-            )
+            # save audio (disabled)
+            if enable_audio and subvideo.audio is not None:
+                audio_file_base_name = segment_index2name[f"{segment_index}"]
+                audio_file = f'{audio_file_base_name}.{audio_output_format}'
+                subaudio = subvideo.audio
+                # Convert to mono and set sample rate using ffmpeg parameters
+                subaudio.write_audiofile(
+                    os.path.join(video_segment_cache_path, audio_file),
+                    codec='mp3',
+                    fps=audio_sample_rate,  # Set sample rate
+                    ffmpeg_params=['-ac', '1'],  # Force mono (1 audio channel)
+                    verbose=False,
+                    logger=None
+                )
+            else:
+                logger.info(f"Audio extraction disabled for segment {segment_index}")
             
             segment_index += 1
 
@@ -71,6 +75,7 @@ def saving_video_segments(
     segment_index2name,
     segment_times_info,
     video_output_format='mp4',
+    include_audio=False,  # Disable audio by default
 ):
     try:
         with VideoFileClip(video_path) as video:
@@ -79,7 +84,14 @@ def saving_video_segments(
                 start, end = segment_times_info[index]["timestamp"][0], segment_times_info[index]["timestamp"][1]
                 video_file = f'{segment_index2name[index]}.{video_output_format}'
                 subvideo = video.subclip(start, end)
-                subvideo.write_videofile(os.path.join(video_segment_cache_path, video_file), codec='libx264', verbose=False, logger=None)
+                # Save without audio
+                subvideo_without_audio = subvideo.without_audio()
+                subvideo_without_audio.write_videofile(
+                    os.path.join(video_segment_cache_path, video_file),
+                    codec='libx264',
+                    verbose=False,
+                    logger=None
+                )
     except Exception as e:
         logger.error(f"Error in saving_video_segments:\n {str(e)}")
         raise RuntimeError

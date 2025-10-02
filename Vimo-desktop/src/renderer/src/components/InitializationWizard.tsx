@@ -23,9 +23,8 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
   // Define steps configuration
   const steps = [
     { step: 1, icon: FolderOpen, label: 'Directory' },
-    { step: 2, icon: Download, label: 'Models' },
-    { step: 3, icon: Brain, label: 'API Keys' },
-    { step: 4, icon: Star, label: 'Complete' }
+    { step: 2, icon: Brain, label: 'API Keys' },
+    { step: 3, icon: Star, label: 'Complete' }
   ];
   const totalSteps = steps.length;
   
@@ -38,6 +37,8 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
   
   // API Key configuration status
   const [apiKeySettings, setApiKeySettings] = useState({
+    runpodUrl: 'https://7z1u9gfm19hw4h-8088.proxy.runpod.net',
+    runpodApiKey: '',
     openaiBaseUrl: 'https://api.openai.com/v1',
     openaiApiKey: '',
     processingModel: 'gpt-4o-mini',
@@ -155,9 +156,8 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
 
   // Check if can proceed to next step
   const canProceedToStep2 = storeDirectory !== '';
-  const canProceedToStep3 = imagebindStatus === 'completed';
   // API keys are optional but recommended
-  const canProceedToStep4 = canProceedToStep3;
+  const canProceedToStep3 = true; // Skip model check since models are on RunPod
 
   // Handle step transitions with animation
   const goToStep = (step: number) => {
@@ -208,15 +208,22 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
       ...apiKeySettings, // Include API key settings
       initializedAt: new Date().toISOString()
     };
-    
+
     await window.api.saveSettings(settings);
-    
+
+    // Save backend configuration to localStorage for RemoteVideoService
+    const backendConfig = {
+      url: apiKeySettings.runpodUrl,
+      apiKey: apiKeySettings.runpodApiKey
+    };
+    localStorage.setItem('videorag-backend-config', JSON.stringify(backendConfig));
+
     // Trigger configuration update event, notify sidebar to reload sessions
     const event = new CustomEvent('storage-config-updated', {
       detail: { storeDirectory }
     });
     window.dispatchEvent(event);
-    
+
     onComplete();
   };
 
@@ -276,8 +283,8 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
       </div>
 
       <div className="flex justify-end">
-        <Button 
-          onClick={() => goToStep(2)} 
+        <Button
+          onClick={() => goToStep(2)}
           disabled={!canProceedToStep2}
           className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white rounded-lg font-medium transition-all disabled:opacity-50"
         >
@@ -288,114 +295,14 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
     </div>
   );
 
-  const renderStep2 = () => (
-    <div className="space-y-6">
-      <div className="text-center">
-        <div className="flex items-center justify-center gap-3 mb-3">
-          <h2 className="text-2xl font-bold text-gray-900">AI Models Status</h2>
-          <Button
-            onClick={refreshModelsStatus}
-            size="sm"
-            variant="outline"
-            disabled={isRefreshing}
-            className="px-3 py-1 border-gray-300 hover:border-purple-400 hover:bg-purple-50 transition-all disabled:opacity-50"
-            title="Refresh model status"
-          >
-            <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
-            {isRefreshing ? 'Checking...' : 'Refresh Status'}
-          </Button>
-        </div>
-        <p className="text-gray-600">
-          {canProceedToStep3 
-            ? "All AI models are already available and ready to use!" 
-            : "Preparing powerful AI models for you, this may take a few minutes"
-          }
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-6">
-        {/* ImageBind Card */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-              <Brain className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-blue-900">ImageBind</h3>
-              <p className="text-sm text-blue-700">Image & Video Understanding</p>
-            </div>
-          </div>
-          
-          <div className="space-y-3">
-            <div className="flex justify-between items-center p-2 bg-white/60 rounded-lg text-sm">
-              <span>File Size</span>
-              <span className="font-semibold text-blue-700">~4.5GB</span>
-            </div>
-            
-            {imagebindStatus === 'downloading' && (
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Progress</span>
-                  <span>{Math.round(downloadProgress.imagebind)}%</span>
-                </div>
-                <div className="w-full bg-blue-200 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${downloadProgress.imagebind}%` }}
-                  />
-                </div>
-              </div>
-            )}
-
-            <Button
-              onClick={downloadImageBind}
-              disabled={imagebindStatus === 'downloading' || imagebindStatus === 'completed'}
-              className={`w-full py-2 font-medium rounded-lg transition-all ${
-                imagebindStatus === 'completed' 
-                  ? 'bg-green-500 hover:bg-green-600 text-white' 
-                  : 'bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white'
-              }`}
-            >
-              {imagebindStatus === 'downloading' && <RefreshCw className="w-4 h-4 mr-2 animate-spin" />}
-              {imagebindStatus === 'completed' && <CheckCircle className="w-4 h-4 mr-2" />}
-              {imagebindStatus === 'pending' && <Download className="w-4 h-4 mr-2" />}
-              
-              {imagebindStatus === 'completed' ? 'Completed' : 
-               imagebindStatus === 'downloading' ? 'Downloading...' : 'Start Download'}
-            </Button>
-          </div>
-        </div>
-
-
-      </div>
-
-      <div className="flex justify-between items-center">
-        <Button 
-          onClick={() => goToStep(1)} 
-          className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-all"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-        
-        <Button 
-          onClick={() => goToStep(3)} 
-          disabled={!canProceedToStep3}
-          className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white rounded-lg font-medium transition-all disabled:opacity-50"
-        >
-          Next
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
-      </div>
-    </div>
-  );
+  // Models are on RunPod - no need for model download step
 
   const renderApiKeySetup = () => (
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">API Key Configuration</h2>
         <p className="text-gray-600">
-          Configure your API keys for enhanced video analysis capabilities
+          Configure your API keys and backend endpoint for video analysis
         </p>
         <p className="text-sm text-gray-500 mt-2">
           All API keys are stored locally and never shared with third parties
@@ -403,6 +310,49 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
       </div>
 
       <div className="space-y-6">
+        {/* RunPod Configuration */}
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+              <Brain className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-purple-900">RunPod Backend</h3>
+              <p className="text-sm text-purple-700">Configure your RunPod endpoint for video processing</p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-gray-700 block mb-2">
+                RunPod Endpoint URL
+              </label>
+              <input
+                type="text"
+                placeholder="https://xxx-8088.proxy.runpod.net"
+                value={apiKeySettings.runpodUrl}
+                onChange={(e) => handleApiKeyChange('runpodUrl', e.target.value)}
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <p className="text-xs text-gray-500 mt-1">Your RunPod service endpoint URL</p>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-gray-700 block mb-2">
+                RunPod API Key (Optional)
+              </label>
+              <input
+                type="password"
+                placeholder="Enter API key if required"
+                value={apiKeySettings.runpodApiKey}
+                onChange={(e) => handleApiKeyChange('runpodApiKey', e.target.value)}
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <p className="text-xs text-gray-500 mt-1">Required if your RunPod endpoint needs authentication</p>
+            </div>
+          </div>
+        </div>
+
         {/* OpenAI Configuration */}
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
           <div className="flex items-center gap-3 mb-4">
@@ -547,17 +497,17 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
       </div>
 
       <div className="flex justify-between items-center">
-        <Button 
-          onClick={() => goToStep(2)} 
+        <Button
+          onClick={() => goToStep(1)}
           className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-all"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back
         </Button>
-        
-        <Button 
-          onClick={() => goToStep(4)} 
-          disabled={!canProceedToStep4}
+
+        <Button
+          onClick={() => goToStep(3)}
+          disabled={!canProceedToStep3}
           className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white rounded-lg font-medium transition-all disabled:opacity-50"
         >
           Complete Setup
@@ -687,9 +637,8 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
           {/* Step content */}
           <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
             {currentStep === 1 && renderStep1()}
-            {currentStep === 2 && renderStep2()}
-            {currentStep === 3 && renderApiKeySetup()}
-            {currentStep === 4 && renderCelebration()}
+            {currentStep === 2 && renderApiKeySetup()}
+            {currentStep === 3 && renderCelebration()}
           </div>
         </div>
       </div>

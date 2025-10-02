@@ -5,6 +5,7 @@ from tqdm import tqdm
 from imagebind import data
 from imagebind.models import imagebind_model
 from imagebind.models.imagebind_model import ImageBindModel, ModalityType
+from .._utils.model_config import get_model_config
 
 
 def encode_video_segments(video_paths, embedder: ImageBindModel):

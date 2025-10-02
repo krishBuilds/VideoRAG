@@ -7,6 +7,7 @@ import { setupVideoRAGHandlers, stopVideoRAGService } from './handlers/videorag-
 import { registerFileHandlers } from './handlers/file-handlers';
 import { registerSettingsHandlers } from './handlers/settings';
 import { registerChatSessionHandlers } from './handlers/chat-session-handlers';
+import { registerRemoteBackendHandlers } from './handlers/remote-backend-handlers';
 
 
 // Create window when app is ready
@@ -22,6 +23,7 @@ app.whenReady().then(() => {
   registerSettingsHandlers();
   registerChatSessionHandlers();
   setupVideoRAGHandlers();
+  registerRemoteBackendHandlers(); // For RunPod communication
   registerModelHandlers();
 
   // VideoRAG API service is now started manually via UI button
