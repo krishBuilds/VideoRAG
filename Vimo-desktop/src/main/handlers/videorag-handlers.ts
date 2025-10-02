@@ -202,10 +202,10 @@ async function callVideoRAGAPI(endpoint: string, method: 'GET' | 'POST' | 'DELET
     timeout = customTimeout || 120000; // Initialization still needs to wait: 2 minutes
   } else if (endpoint.includes('/status')) {
     timeout = customTimeout || 10000;  // Status query: 10 seconds
-  } else if (endpoint.includes('/imagebind/load') || endpoint.includes('/imagebind/release')) {
-    timeout = customTimeout || 180000; // ImageBind model load/release: 3 minutes
-  } else if (endpoint.includes('/imagebind/status')) {
-    timeout = customTimeout || 10000;  // ImageBind status query: 10 seconds
+  } else if (endpoint.includes('/internvideo2/load') || endpoint.includes('/internvideo2/release')) {
+    timeout = customTimeout || 180000; // InternVideo2 model load/release: 3 minutes
+  } else if (endpoint.includes('/internvideo2/status')) {
+    timeout = customTimeout || 10000;  // InternVideo2 status query: 10 seconds
   }
   
   try {
@@ -226,17 +226,17 @@ async function callVideoRAGAPI(endpoint: string, method: 'GET' | 'POST' | 'DELET
   }
 }
 
-// Modify: automatically initialize VideoRAG configuration, dynamically build ImageBind path
+// Modify: automatically initialize VideoRAG configuration, dynamically build InternVideo2 path
 async function initializeVideoRAGConfig(): Promise<void> {
   try {
     console.log('🔧 Loading VideoRAG configuration...')
-    
+
     // 1. Load basic configuration from settings
     const settingsResult = await loadSettingsFromFile()
     if (!settingsResult.success) {
       throw new Error('Failed to load settings')
     }
-    
+
     const settings = settingsResult.settings
     console.log('🔧 Loaded settings:', {
       ...settings,
@@ -244,22 +244,22 @@ async function initializeVideoRAGConfig(): Promise<void> {
       openaiApiKey: settings.openaiApiKey ? '***' : 'NOT_SET',
       dashscopeApiKey: settings.dashscopeApiKey ? '***' : 'NOT_SET'
     })
-    
-    // 2. Dynamically build ImageBind model path
-    let imagebindModelPath = ''
+
+    // 2. Dynamically build InternVideo2 model path
+    let internvideo2ModelPath = ''
     if (settings.storeDirectory) {
-      imagebindModelPath = require('path').join(settings.storeDirectory, 'imagebind_huge', 'imagebind_huge.pth')
-      console.log('🔧 Constructed ImageBind path:', imagebindModelPath)
+      internvideo2ModelPath = require('path').join(settings.storeDirectory, 'checkpoints', 'InternVideo2_1B_S2.pth')
+      console.log('🔧 Constructed InternVideo2 path:', internvideo2ModelPath)
     }
-    
+
     // 3. Build VideoRAG configuration object (only set default values for allowed fields)
     const videoragConfig = {
       // Required fields - no default values
       ali_dashscope_api_key: settings.dashscopeApiKey,
       openai_api_key: settings.openaiApiKey,
-      image_bind_model_path: imagebindModelPath, // Use dynamically built path
+      internvideo2_model_path: internvideo2ModelPath, // Use dynamically built path
       base_storage_path: settings.storeDirectory,
-      
+
       // Fields with default values
       ali_dashscope_base_url: settings.dashscopeBaseUrl || 'https://dashscope.aliyuncs.com/compatible-mode/v1',
       openai_base_url: settings.openaiBaseUrl || 'https://api.openai.com/v1',
@@ -274,7 +274,7 @@ async function initializeVideoRAGConfig(): Promise<void> {
       ali_dashscope_base_url: '✅ SET (default allowed)',
       openai_api_key: videoragConfig.openai_api_key ? '✅ SET' : '❌ MISSING',
       openai_base_url: '✅ SET (default allowed)',
-      image_bind_model_path: videoragConfig.image_bind_model_path ? '✅ SET' : '❌ MISSING',
+      internvideo2_model_path: videoragConfig.internvideo2_model_path ? '✅ SET' : '❌ MISSING',
       base_storage_path: videoragConfig.base_storage_path ? '✅ SET' : '❌ MISSING',
       analysisModel: '✅ SET (default allowed)',
       processingModel: '✅ SET (default allowed)',
@@ -297,10 +297,10 @@ async function initializeVideoRAGConfig(): Promise<void> {
       missingFields.push('Base Storage Path (storeDirectory)')
     }
     
-    if (!videoragConfig.image_bind_model_path || videoragConfig.image_bind_model_path.trim() === '') {
-      missingFields.push('ImageBind Model Path (storeDirectory + imagebind_huge/imagebind_huge.pth)')
+    if (!videoragConfig.internvideo2_model_path || videoragConfig.internvideo2_model_path.trim() === '') {
+      missingFields.push('InternVideo2 Model Path (storeDirectory + checkpoints/InternVideo2_1B_S2.pth)')
     }
-    
+
     // 5. If there are missing fields, throw an error and stop the service
     if (missingFields.length > 0) {
       const errorMessage = `❌ VideoRAG configuration validation failed!\n\nMissing required fields:\n${missingFields.map(field => `  • ${field}`).join('\n')}\n\nPlease run the initialization wizard to configure these settings.`
@@ -314,21 +314,21 @@ async function initializeVideoRAGConfig(): Promise<void> {
       throw new Error(`Missing required configuration fields: ${missingFields.join(', ')}`)
     }
     
-    // 6. Validate ImageBind model file exists
+    // 6. Validate InternVideo2 model file exists
     try {
       const { access } = await import('node:fs/promises')
-      await access(videoragConfig.image_bind_model_path)
-      console.log('✅ ImageBind model file verified:', videoragConfig.image_bind_model_path)
+      await access(videoragConfig.internvideo2_model_path)
+      console.log('✅ InternVideo2 model file verified:', videoragConfig.internvideo2_model_path)
     } catch (error) {
-      const errorMessage = `❌ ImageBind model file not found: ${videoragConfig.image_bind_model_path}\n\nThe file should be downloaded during initialization wizard.\nPlease run the initialization wizard to download the ImageBind model.`
+      const errorMessage = `❌ InternVideo2 model file not found: ${videoragConfig.internvideo2_model_path}\n\nThe file should be downloaded during initialization wizard.\nPlease run the initialization wizard to download the InternVideo2 model.`
       
       console.error(errorMessage)
       
       // Stop VideoRAG service
       console.log('🛑 Stopping VideoRAG service due to missing model file...')
       stopVideoRAGService()
-      
-      throw new Error(`ImageBind model file not found: ${videoragConfig.image_bind_model_path}`)
+
+      throw new Error(`InternVideo2 model file not found: ${videoragConfig.internvideo2_model_path}`)
     }
     
     // 7. Validate storage directory is accessible/creatable
@@ -383,27 +383,27 @@ async function initializeVideoRAGConfig(): Promise<void> {
   }
 }
 
-// Modify: load settings from file, remove hardcoded imagebind path
+// Modify: load settings from file, remove hardcoded internvideo2 path
 async function loadSettingsFromFile(): Promise<{ success: boolean; settings?: any; error?: string }> {
   try {
     const { readFile, access } = await import('node:fs/promises')
     const { join } = await import('node:path')
     const { homedir } = await import('node:os')
-    
+
     const BOOTSTRAP_CONFIG_FILE = join(homedir(), '.videorag-bootstrap.json')
-    
+
     let settings: any = {
       // Only set default values for fields with allowed defaults
       openaiBaseUrl: 'https://api.openai.com/v1',
       dashscopeBaseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
       processingModel: 'gpt-4o-mini',
       analysisModel: 'gpt-4o-mini',
-      
+
       // Required fields without default values
       openaiApiKey: '',
       dashscopeApiKey: '',
-      storeDirectory: '', // This determines the imagebind model path
-      // imagebindModelPath field removed, because it is dynamically built
+      storeDirectory: '', // This determines the internvideo2 model path
+      // internvideo2ModelPath field removed, because it is dynamically built
     }
 
     // Try to load bootstrap configuration
@@ -752,30 +752,30 @@ export function setupVideoRAGHandlers() {
     }
   })
 
-  // Load ImageBind model
-  ipcMain.handle('videorag:load-imagebind', async () => {
+  // Load InternVideo2 model
+  ipcMain.handle('videorag:load-internvideo2', async () => {
     try {
-      const result = await callVideoRAGAPI('/imagebind/load', 'POST')
+      const result = await callVideoRAGAPI('/internvideo2/load', 'POST')
       return { success: true, data: result }
     } catch (error: any) {
       return { success: false, error: error.message }
     }
   })
 
-  // Release ImageBind model
-  ipcMain.handle('videorag:release-imagebind', async () => {
+  // Release InternVideo2 model
+  ipcMain.handle('videorag:release-internvideo2', async () => {
     try {
-      const result = await callVideoRAGAPI('/imagebind/release', 'POST')
+      const result = await callVideoRAGAPI('/internvideo2/release', 'POST')
       return { success: true, data: result }
     } catch (error: any) {
       return { success: false, error: error.message }
     }
   })
 
-  // Get ImageBind status
-  ipcMain.handle('videorag:imagebind-status', async () => {
+  // Get InternVideo2 status
+  ipcMain.handle('videorag:internvideo2-status', async () => {
     try {
-      const result = await callVideoRAGAPI('/imagebind/status', 'GET')
+      const result = await callVideoRAGAPI('/internvideo2/status', 'GET')
       return { success: true, data: result }
     } catch (error: any) {
       return { success: false, error: error.message }

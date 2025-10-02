@@ -24,14 +24,14 @@ export const VideoRAGConfigModal = ({ isOpen, onClose }: VideoRAGConfigProps) =>
     ali_dashscope_base_url: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
     openai_api_key: '',
     openai_base_url: 'https://api.nuwaapi.com/v1',
-    image_bind_model_path: '/Users/renxubin/Desktop/videorag-store/imagebind_huge/imagebind_huge.pth',
+    internvideo2_model_path: '/Users/renxubin/Desktop/videorag-store/checkpoints/InternVideo2_1B_S2.pth',
     base_storage_path: './videorag-sessions'
   })
   
   // Local check configuration completeness, not dependent on network status
-  const isConfigured = !!(config.openai_api_key && 
-                          config.ali_dashscope_api_key && 
-                          config.image_bind_model_path)
+  const isConfigured = !!(config.openai_api_key &&
+                          config.ali_dashscope_api_key &&
+                          config.internvideo2_model_path)
   
   const [showApiKeys, setShowApiKeys] = useState(false)
 
@@ -65,13 +65,13 @@ export const VideoRAGConfigModal = ({ isOpen, onClose }: VideoRAGConfigProps) =>
     }
   }
 
-  const selectImageBindPath = async () => {
+  const selectInternVideo2Path = async () => {
     try {
       const result = await window.api.selectFolder()
       if (result.success && result.path) {
         // Assume the model file is in the selected folder
-        const modelPath = `${result.path}/imagebind_huge.pth`
-        handleConfigChange('image_bind_model_path', modelPath)
+        const modelPath = `${result.path}/InternVideo2_1B_S2.pth`
+        handleConfigChange('internvideo2_model_path', modelPath)
       }
     } catch (error) {
       console.error('Failed to select folder:', error)
@@ -282,22 +282,22 @@ export const VideoRAGConfigModal = ({ isOpen, onClose }: VideoRAGConfigProps) =>
             
             <div>
               <label className="block text-sm font-medium mb-1">
-                ImageBind Model Path *
+                InternVideo2 Model Path *
               </label>
               <div className="flex space-x-2">
                 <input
                   type="text"
-                  value={config.image_bind_model_path}
-                  onChange={(e) => handleConfigChange('image_bind_model_path', e.target.value)}
-                  placeholder="/path/to/imagebind_huge.pth"
+                  value={config.internvideo2_model_path}
+                  onChange={(e) => handleConfigChange('internvideo2_model_path', e.target.value)}
+                  placeholder="/path/to/InternVideo2_1B_S2.pth"
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <Button onClick={selectImageBindPath} variant="outline">
+                <Button onClick={selectInternVideo2Path} variant="outline">
                   Browse
                 </Button>
               </div>
               <p className="text-xs text-gray-500 mt-1">
-                Path to the ImageBind model file (imagebind_huge.pth)
+                Path to the InternVideo2 model file (InternVideo2_1B_S2.pth)
               </p>
             </div>
 
@@ -323,9 +323,9 @@ export const VideoRAGConfigModal = ({ isOpen, onClose }: VideoRAGConfigProps) =>
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button 
+          <Button
             onClick={handleSave}
-            disabled={loading.initializing || !config.openai_api_key || !config.ali_dashscope_api_key || !config.image_bind_model_path}
+            disabled={loading.initializing || !config.openai_api_key || !config.ali_dashscope_api_key || !config.internvideo2_model_path}
           >
             {loading.initializing ? 'Configuring...' : 'Save & Configure'}
           </Button>

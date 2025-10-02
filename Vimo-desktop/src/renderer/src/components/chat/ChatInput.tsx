@@ -27,8 +27,8 @@ export const ChatInput = ({
 }: ChatInputProps) => {
   const { serviceState, loading } = useServiceContext();
   
-  // Only allow sending messages when ImageBind is loaded and not in operation
-  const isServiceReady = serviceState.imagebindLoaded && !loading.loadingImageBind && !loading.releasingImageBind;
+  // Only allow sending messages when InternVideo2 is loaded and not in operation
+  const isServiceReady = serviceState.internvideo2Loaded && !loading.loadingInternVideo2 && !loading.releasingInternVideo2;
   const isInputDisabled = isAnalyzing || isQueryProcessing || isLoading || !isServiceReady;
   
 

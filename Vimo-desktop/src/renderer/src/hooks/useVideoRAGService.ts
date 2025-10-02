@@ -4,23 +4,23 @@ import { useState } from 'react'
 
 export interface ServiceState {
   isRunning: boolean
-  imagebindLoaded: boolean
+  internvideo2Loaded: boolean
   message?: string
   error?: string
 }
 
 export const useVideoRAGService = () => {
 
-  const [serviceState, setServiceState] = useState<ServiceState>({ 
+  const [serviceState, setServiceState] = useState<ServiceState>({
     isRunning: false,
-    imagebindLoaded: false
+    internvideo2Loaded: false
   })
   const [loading, setLoading] = useState({
     starting: false,
     stopping: false,
     checkingService: false,
-    loadingImageBind: false,
-    releasingImageBind: false
+    loadingInternVideo2: false,
+    releasingInternVideo2: false
   })
 
 
@@ -34,16 +34,16 @@ export const useVideoRAGService = () => {
         setServiceState(prev => ({
           ...prev,
           isRunning: result.data.total_sessions !== undefined || result.data.global_config_set,
-          imagebindLoaded: result.data.imagebind_loaded || false,
-          message: result.data.imagebind_loaded 
-            ? 'Service ready for video processing' 
-            : 'Service running - ImageBind not loaded'
+          internvideo2Loaded: result.data.internvideo2_loaded || false,
+          message: result.data.internvideo2_loaded
+            ? 'Service ready for video processing'
+            : 'Service running - InternVideo2 not loaded'
         }))
       } else {
         setServiceState(prev => ({
           ...prev,
           isRunning: false,
-          imagebindLoaded: false,
+          internvideo2Loaded: false,
           error: result.error || 'Failed to get system status'
         }))
       }
@@ -51,7 +51,7 @@ export const useVideoRAGService = () => {
       setServiceState(prev => ({
         ...prev,
         isRunning: false,
-        imagebindLoaded: false,
+        internvideo2Loaded: false,
         error: 'Failed to check service status'
       }))
     } finally {
@@ -125,16 +125,16 @@ export const useVideoRAGService = () => {
     }
   }
 
-  // Load ImageBind model
-  const loadImageBind = async () => {
-    setLoading(prev => ({ ...prev, loadingImageBind: true }))
+  // Load InternVideo2 model
+  const loadInternVideo2 = async () => {
+    setLoading(prev => ({ ...prev, loadingInternVideo2: true }))
     try {
-      const result = await window.api.videorag.loadImageBind()
+      const result = await window.api.videorag.loadInternVideo2()
       if (result.success) {
         setServiceState(prev => ({
           ...prev,
-          imagebindLoaded: true,
-          message: 'ImageBind model loaded successfully'
+          internvideo2Loaded: true,
+          message: 'InternVideo2 model loaded successfully'
         }))
         return true
       } else {
@@ -147,24 +147,24 @@ export const useVideoRAGService = () => {
     } catch (error) {
       setServiceState(prev => ({
         ...prev,
-        error: 'Failed to load ImageBind model'
+        error: 'Failed to load InternVideo2 model'
       }))
       return false
     } finally {
-      setLoading(prev => ({ ...prev, loadingImageBind: false }))
+      setLoading(prev => ({ ...prev, loadingInternVideo2: false }))
     }
   }
 
-  // Release ImageBind model
-  const releaseImageBind = async () => {
-    setLoading(prev => ({ ...prev, releasingImageBind: true }))
+  // Release InternVideo2 model
+  const releaseInternVideo2 = async () => {
+    setLoading(prev => ({ ...prev, releasingInternVideo2: true }))
     try {
-      const result = await window.api.videorag.releaseImageBind()
+      const result = await window.api.videorag.releaseInternVideo2()
       if (result.success) {
         setServiceState(prev => ({
           ...prev,
-          imagebindLoaded: false,
-          message: 'ImageBind model released successfully'
+          internvideo2Loaded: false,
+          message: 'InternVideo2 model released successfully'
         }))
         return true
       } else {
@@ -177,26 +177,26 @@ export const useVideoRAGService = () => {
     } catch (error) {
       setServiceState(prev => ({
         ...prev,
-        error: 'Failed to release ImageBind model'
+        error: 'Failed to release InternVideo2 model'
       }))
       return false
     } finally {
-      setLoading(prev => ({ ...prev, releasingImageBind: false }))
+      setLoading(prev => ({ ...prev, releasingInternVideo2: false }))
     }
   }
 
-  // Check ImageBind status
-  const checkImageBindStatus = async () => {
+  // Check InternVideo2 status
+  const checkInternVideo2Status = async () => {
     try {
-      const result = await window.api.videorag.imagebindStatus()
+      const result = await window.api.videorag.internvideo2Status()
       if (result.success) {
         setServiceState(prev => ({
           ...prev,
-          imagebindLoaded: result.data?.loaded || false
+          internvideo2Loaded: result.data?.loaded || false
         }))
       }
     } catch (error) {
-      console.error('Failed to check ImageBind status:', error)
+      console.error('Failed to check InternVideo2 status:', error)
     }
   }
 
@@ -207,8 +207,8 @@ export const useVideoRAGService = () => {
     checkServiceStatus,
     startService,
     stopService,
-    loadImageBind,
-    releaseImageBind,
-    checkImageBindStatus
+    loadInternVideo2,
+    releaseInternVideo2,
+    checkInternVideo2Status
   }
 } 

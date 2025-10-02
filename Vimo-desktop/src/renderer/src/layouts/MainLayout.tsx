@@ -53,18 +53,55 @@ export function MainLayout() {
   const [isInitializing, setIsInitializing] = useState(true);
   const hasInitializedRef = useRef(false);
 
-  // When entering the main interface, automatically start the Python service
+  // When entering the main interface, check backend configuration and start service if needed
   useEffect(() => {
     // Avoid duplicate initialization
     if (hasInitializedRef.current) return;
 
     const initializeService = async () => {
       try {
-        console.log('MainLayout: Starting service initialization...');
-        
+        console.log('MainLayout: Checking backend configuration...');
+
+        // Check if remote backend is configured first
+        const backendConfig = localStorage.getItem('videorag-backend-config');
+        let isRemoteBackend = false;
+
+        if (backendConfig) {
+          try {
+            const config = JSON.parse(backendConfig);
+            isRemoteBackend = config.url && !config.url.includes('localhost') && !config.url.includes('127.0.0.1');
+            console.log('MainLayout: Remote backend configured:', isRemoteBackend, 'URL:', config.url);
+          } catch (error) {
+            console.warn('MainLayout: Failed to parse backend config:', error);
+          }
+        }
+
+        // If no backend is configured, set up the remote one immediately
+        if (!backendConfig) {
+          console.log('MainLayout: No backend configured, setting up remote backend...');
+          const defaultConfig = {
+            url: 'https://7z1u9gfm19hw4h-8088.proxy.runpod.net',
+            apiKey: ''
+          };
+          localStorage.setItem('videorag-backend-config', JSON.stringify(defaultConfig));
+          isRemoteBackend = true;
+          console.log('MainLayout: Remote backend auto-configured:', defaultConfig.url);
+        }
+
+        // Early return for remote backend - skip ALL local service operations
+        if (isRemoteBackend) {
+          console.log('MainLayout: Using remote backend, skipping all local service operations');
+          setIsInitializing(false);
+          hasInitializedRef.current = true;
+          return;
+        }
+
+        // Only proceed with local service initialization if not using remote backend
+        console.log('MainLayout: Starting local service initialization...');
+
         // Try to start the service directly, if it is running, the API will return the corresponding status
         const success = await startService();
-        
+
         if (success) {
           console.log('MainLayout: Python service started successfully');
         } else {

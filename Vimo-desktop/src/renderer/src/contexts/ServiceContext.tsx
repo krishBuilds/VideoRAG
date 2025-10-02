@@ -5,7 +5,7 @@ import { useVideoRAGService } from '../hooks/useVideoRAGService';
 interface ServiceContextType {
   serviceState: {
     isRunning: boolean;
-    imagebindLoaded: boolean;
+    internvideo2Loaded: boolean;
     message?: string;
     error?: string;
   };
@@ -13,15 +13,15 @@ interface ServiceContextType {
     starting: boolean;
     stopping: boolean;
     checkingService: boolean;
-    loadingImageBind: boolean;
-    releasingImageBind: boolean;
+    loadingInternVideo2: boolean;
+    releasingInternVideo2: boolean;
   };
   startService: () => Promise<boolean>;
   stopService: () => Promise<boolean>;
   checkServiceStatus: () => Promise<void>;
-  loadImageBind: () => Promise<boolean>;
-  releaseImageBind: () => Promise<boolean>;
-  checkImageBindStatus: () => Promise<void>;
+  loadInternVideo2: () => Promise<boolean>;
+  releaseInternVideo2: () => Promise<boolean>;
+  checkInternVideo2Status: () => Promise<void>;
 }
 
 const ServiceContext = createContext<ServiceContextType | null>(null);
@@ -33,22 +33,22 @@ export const ServiceProvider = ({ children }: { children: ReactNode }) => {
     startService,
     stopService,
     checkServiceStatus,
-    loadImageBind,
-    releaseImageBind,
-    checkImageBindStatus
+    loadInternVideo2,
+    releaseInternVideo2,
+    checkInternVideo2Status
   } = useVideoRAGService();
 
   return (
-    <ServiceContext.Provider 
+    <ServiceContext.Provider
       value={{
         serviceState,
         loading,
         startService,
         stopService,
         checkServiceStatus,
-        loadImageBind,
-        releaseImageBind,
-        checkImageBindStatus
+        loadInternVideo2,
+        releaseInternVideo2,
+        checkInternVideo2Status
       }}
     >
       {children}

@@ -30,8 +30,8 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
   
   const [currentStep, setCurrentStep] = useState(1);
   const [storeDirectory, setStoreDirectory] = useState('');
-  const [imagebindStatus, setImagebindStatus] = useState<'pending' | 'downloading' | 'completed' | 'error'>('pending');
-  const [downloadProgress, setDownloadProgress] = useState({ imagebind: 0 });
+  const [internvideo2Status, setInternvideo2Status] = useState<'pending' | 'downloading' | 'completed' | 'error'>('pending');
+  const [downloadProgress, setDownloadProgress] = useState({ internvideo2: 0 });
   const [isInitializing, setIsInitializing] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   
@@ -77,8 +77,8 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
   useEffect(() => {
     const handleDownloadProgress = (_, data: { type: string, progress: number, downloaded?: number, total?: number }) => {
       console.log('Download progress:', data);
-      if (data.type === 'imagebind') {
-        setDownloadProgress(prev => ({ ...prev, imagebind: data.progress }));
+      if (data.type === 'internvideo2') {
+        setDownloadProgress(prev => ({ ...prev, internvideo2: data.progress }));
       }
     };
 
@@ -94,23 +94,23 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
   // Check if model files exist
   const checkModelFiles = async (directory?: string) => {
     const targetDirectory = directory || storeDirectory;
-    if (!targetDirectory) return { imagebind: false };
+    if (!targetDirectory) return { internvideo2: false };
 
     try {
       const result = await window.api.checkModelFiles(targetDirectory);
       console.log('Model check result:', result);
-      
-      setImagebindStatus(result.imagebind ? 'completed' : 'pending');
-      
+
+      setInternvideo2Status(result.internvideo2 ? 'completed' : 'pending');
+
       // Update progress to 100% for completed models
-      if (result.imagebind) {
-        setDownloadProgress(prev => ({ ...prev, imagebind: 100 }));
+      if (result.internvideo2) {
+        setDownloadProgress(prev => ({ ...prev, internvideo2: 100 }));
       }
-      
+
       return result;
     } catch (error) {
       console.error('Failed to check model files:', error);
-      return { imagebind: false };
+      return { internvideo2: false };
     }
   };
 
@@ -128,29 +128,29 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
     }
   };
 
-  // Download ImageBind model
-  const downloadImageBind = async () => {
+  // Download InternVideo2 model
+  const downloadInternVideo2 = async () => {
     if (!storeDirectory) return;
-    
-    setImagebindStatus('downloading');
-    setDownloadProgress(prev => ({ ...prev, imagebind: 0 }));
-    
+
+    setInternvideo2Status('downloading');
+    setDownloadProgress(prev => ({ ...prev, internvideo2: 0 }));
+
     try {
-      console.log('Starting ImageBind download...');
-      const result = await window.api.downloadImageBind(storeDirectory);
-      
+      console.log('Starting InternVideo2 download...');
+      const result = await window.api.downloadInternVideo2(storeDirectory);
+
       if (result.success) {
-        setImagebindStatus('completed');
-        setDownloadProgress(prev => ({ ...prev, imagebind: 100 }));
-        console.log('ImageBind download completed successfully');
+        setInternvideo2Status('completed');
+        setDownloadProgress(prev => ({ ...prev, internvideo2: 100 }));
+        console.log('InternVideo2 download completed successfully');
       } else {
-        setImagebindStatus('error');
-        alert(`ImageBind download failed: ${result.error}`);
+        setInternvideo2Status('error');
+        alert(`InternVideo2 download failed: ${result.error}`);
       }
     } catch (error) {
-      setImagebindStatus('error');
-      console.error('ImageBind download failed:', error);
-      alert(`ImageBind download error: ${error}`);
+      setInternvideo2Status('error');
+      console.error('InternVideo2 download failed:', error);
+      alert(`InternVideo2 download error: ${error}`);
     }
   };
 
@@ -167,20 +167,20 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
   // Refresh model status
   const refreshModelsStatus = async () => {
     if (!storeDirectory || isRefreshing) return;
-    
+
     setIsRefreshing(true);
-    
+
     try {
       const result = await window.api.checkModelFiles(storeDirectory);
       console.log('Refresh check result:', result);
-      
-      setImagebindStatus(result.imagebind ? 'completed' : 'pending');
-      
+
+      setInternvideo2Status(result.internvideo2 ? 'completed' : 'pending');
+
       // Update progress for completed models
-      if (result.imagebind) {
-        setDownloadProgress(prev => ({ ...prev, imagebind: 100 }));
+      if (result.internvideo2) {
+        setDownloadProgress(prev => ({ ...prev, internvideo2: 100 }));
       } else {
-        setDownloadProgress(prev => ({ ...prev, imagebind: 0 }));
+        setDownloadProgress(prev => ({ ...prev, internvideo2: 0 }));
       }
     } catch (error) {
       console.error('Failed to refresh model status:', error);
@@ -204,7 +204,7 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
     // Save configuration including API keys
     const settings = {
       storeDirectory,
-      imagebindInstalled: true,
+      internvideo2Installed: true,
       ...apiKeySettings, // Include API key settings
       initializedAt: new Date().toISOString()
     };
@@ -538,7 +538,7 @@ const InitializationWizard: React.FC<InitializationWizardProps> = ({ onComplete 
         </div>
         <div className="p-3 bg-green-50 rounded-lg border border-green-100">
           <CheckCircle className="w-5 h-5 text-green-600 mx-auto mb-1" />
-          <div className="text-sm font-medium text-green-800">ImageBind</div>
+          <div className="text-sm font-medium text-green-800">InternVideo2</div>
           <div className="text-xs text-green-600">AI Model</div>
         </div>
         <div className="p-3 bg-orange-50 rounded-lg border border-orange-100">

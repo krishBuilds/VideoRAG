@@ -46,8 +46,13 @@ const Chat = () => {
   });
 
   const isNewChat = chat.messages.length === 0 && !chat.analysisState.isAnalyzing;
-  // If ImageBind is loaded and not in operation, allow video operations
-  const isServiceReady = serviceState.imagebindLoaded && !serviceLoading.loadingImageBind && !serviceLoading.releasingImageBind;
+  // Check if using remote backend
+  const isRemoteBackend = localStorage.getItem('videorag-backend-config') &&
+    JSON.parse(localStorage.getItem('videorag-backend-config') || '{}').url &&
+    !JSON.parse(localStorage.getItem('videorag-backend-config') || '{}').url.includes('localhost');
+
+  // Allow video operations when InternVideo2 is loaded (local) OR when using remote backend
+  const isServiceReady = (serviceState.internvideo2Loaded && !serviceLoading.loadingInternVideo2 && !serviceLoading.releasingInternVideo2) || isRemoteBackend;
   
   // Simplify logic: use memory state, determine whether to display VideoSelectionBar based on the number of videos
   const shouldShowVideoBar = chat.uploadedVideos.length > 0 || chat.analysisState.selectedVideos.length > 0;

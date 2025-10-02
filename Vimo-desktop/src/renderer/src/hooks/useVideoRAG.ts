@@ -13,7 +13,7 @@ export interface VideoRAGConfig {
   ali_dashscope_base_url: string
   openai_api_key: string
   openai_base_url: string
-  image_bind_model_path: string
+  internvideo2_model_path: string
   base_storage_path?: string
 }
 

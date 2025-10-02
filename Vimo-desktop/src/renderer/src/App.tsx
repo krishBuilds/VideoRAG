@@ -23,14 +23,14 @@ function AppContent() {
         const result = await window.api.loadSettings();
         
         if (result.success && result.settings) {
-          const { storeDirectory, imagebindInstalled } = result.settings;
-          
-          // If store directory exists and models are marked as installed, 
+          const { storeDirectory, internvideo2Installed } = result.settings;
+
+          // If store directory exists and models are marked as installed,
           // further verify that model files actually exist
-          if (storeDirectory && imagebindInstalled) {
+          if (storeDirectory && internvideo2Installed) {
             try {
               const modelCheck = await window.api.checkModelFiles(storeDirectory);
-              setIsInitialized(modelCheck.imagebind);
+              setIsInitialized(modelCheck.internvideo2);
             } catch (error) {
               console.warn('Failed to check model files:', error);
               setIsInitialized(false);

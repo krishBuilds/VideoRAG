@@ -33,11 +33,11 @@ export function AppSidebar() {
   const [dropPosition, setDropPosition] = useState<'before' | 'after' | null>(null);
   
   // VideoRAG service control
-  const { 
-    serviceState, 
-    loading: serviceLoading, 
-    loadImageBind,
-    releaseImageBind
+  const {
+    serviceState,
+    loading: serviceLoading,
+    loadInternVideo2,
+    releaseInternVideo2
   } = useServiceContext();
   
   // Chat Session information management
@@ -483,29 +483,29 @@ export function AppSidebar() {
         <div className="p-3 bg-gray-50 rounded-lg">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Server size={16} className={`${serviceState.imagebindLoaded ? 'text-green-500' : 'text-gray-400'}`} />
+              <Server size={16} className={`${serviceState.internvideo2Loaded ? 'text-green-500' : 'text-gray-400'}`} />
               <span className="text-sm font-medium">
                 Vimo Service
               </span>
             </div>
             <ToggleSwitch
-              checked={serviceState.imagebindLoaded}
+              checked={serviceState.internvideo2Loaded}
               onChange={async (checked) => {
                 if (checked) {
-                  await loadImageBind();
+                  await loadInternVideo2();
                 } else {
-                  await releaseImageBind();
+                  await releaseInternVideo2();
                 }
               }}
-              disabled={serviceLoading.loadingImageBind || serviceLoading.releasingImageBind}
+              disabled={serviceLoading.loadingInternVideo2 || serviceLoading.releasingInternVideo2}
               size="sm"
             />
           </div>
           <div className="mt-2 text-xs text-gray-600">
-            {serviceLoading.loadingImageBind && 'Loading Embedding model...'}
-            {serviceLoading.releasingImageBind && 'Releasing Embedding model...'}
-            {!serviceLoading.loadingImageBind && !serviceLoading.releasingImageBind && (
-              serviceState.imagebindLoaded ? 'Ready for video processing' : (
+            {serviceLoading.loadingInternVideo2 && 'Loading Embedding model...'}
+            {serviceLoading.releasingInternVideo2 && 'Releasing Embedding model...'}
+            {!serviceLoading.loadingInternVideo2 && !serviceLoading.releasingInternVideo2 && (
+              serviceState.internvideo2Loaded ? 'Ready for video processing' : (
                 serviceState.isRunning ? (
                   <span className="text-yellow-600">
                     Click to load Embedding model

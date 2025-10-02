@@ -73,9 +73,9 @@ export interface VideoRAGAPI {
   }>;
   // Model file checking and downloading
   checkModelFiles: (storeDirectory: string) => Promise<{
-    imagebind: boolean;
+    internvideo2: boolean;
   }>;
-  downloadImageBind: (storeDirectory: string) => Promise<{
+  downloadInternVideo2: (storeDirectory: string) => Promise<{
     success: boolean;
     error?: string;
   }>;
@@ -115,9 +115,9 @@ export interface VideoRAGAPI {
     startService: () => Promise<{ success: boolean; message?: string; error?: string }>;
     stopService: () => Promise<{ success: boolean; message?: string; error?: string }>;
     serviceStatus: () => Promise<{ success: boolean; isRunning?: boolean; message?: string; error?: string }>;
-    loadImageBind: () => Promise<{ success: boolean; data?: any; error?: string }>;
-    releaseImageBind: () => Promise<{ success: boolean; data?: any; error?: string }>;
-    imagebindStatus: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    loadInternVideo2: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    releaseInternVideo2: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    internvideo2Status: () => Promise<{ success: boolean; data?: any; error?: string }>;
     reinitializeConfig: () => Promise<{ success: boolean; message?: string; error?: string }>;
     // Model management
     setupModels: (modelsDir?: string) => Promise<{ success: boolean; data?: any; error?: string }>;
@@ -189,8 +189,8 @@ const api: VideoRAGAPI = {
   // Model file checking and downloading
   checkModelFiles: (storeDirectory: string) =>
     ipcRenderer.invoke('check-model-files', storeDirectory),
-  downloadImageBind: (storeDirectory: string) =>
-    ipcRenderer.invoke('download-imagebind', storeDirectory),
+  downloadInternVideo2: (storeDirectory: string) =>
+    ipcRenderer.invoke('download-internvideo2', storeDirectory),
 
   // Event listener implementations
   onDownloadProgress: (callback: (event: any, data: { type: string, progress: number, downloaded?: number, total?: number }) => void) => {
@@ -234,9 +234,9 @@ const api: VideoRAGAPI = {
     startService: () => ipcRenderer.invoke('videorag:start-service'),
     stopService: () => ipcRenderer.invoke('videorag:stop-service'),
     serviceStatus: () => ipcRenderer.invoke('videorag:service-status'),
-    loadImageBind: () => ipcRenderer.invoke('videorag:load-imagebind'),
-    releaseImageBind: () => ipcRenderer.invoke('videorag:release-imagebind'),
-    imagebindStatus: () => ipcRenderer.invoke('videorag:imagebind-status'),
+    loadInternVideo2: () => ipcRenderer.invoke('videorag:load-internvideo2'),
+    releaseInternVideo2: () => ipcRenderer.invoke('videorag:release-internvideo2'),
+    internvideo2Status: () => ipcRenderer.invoke('videorag:internvideo2-status'),
     reinitializeConfig: () => ipcRenderer.invoke('videorag:reinitialize-config'),
     // Model management
     setupModels: (modelsDir?: string) => ipcRenderer.invoke('videorag:setup-models', modelsDir),

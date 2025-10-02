@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(pnpm --version)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

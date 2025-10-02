@@ -58,9 +58,9 @@ export interface VideoRAGAPI {
   }>;
   // Model file check and download
   checkModelFiles: (storeDirectory: string) => Promise<{
-    imagebind: boolean;
+    internvideo2: boolean;
   }>;
-  downloadImageBind: (storeDirectory: string) => Promise<{
+  downloadInternVideo2: (storeDirectory: string) => Promise<{
     success: boolean;
     error?: string;
   }>;
@@ -104,9 +104,9 @@ export interface VideoRAGAPI {
     stopService: () => Promise<{ success: boolean; message?: string; error?: string }>;
     serviceStatus: () => Promise<{ success: boolean; isRunning?: boolean; message?: string; error?: string }>;
     deleteSession: (chatId: string) => Promise<{ success: boolean; data?: any; error?: string }>;
-    loadImageBind: () => Promise<{ success: boolean; data?: any; error?: string }>;
-    releaseImageBind: () => Promise<{ success: boolean; data?: any; error?: string }>;
-    imagebindStatus: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    loadInternVideo2: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    releaseInternVideo2: () => Promise<{ success: boolean; data?: any; error?: string }>;
+    internvideo2Status: () => Promise<{ success: boolean; data?: any; error?: string }>;
     reinitializeConfig: () => Promise<{ success: boolean; message?: string; error?: string }>;
   };
 

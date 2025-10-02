@@ -79,7 +79,7 @@ export function registerSettingsHandlers(): void {
         pythonInstalled: false,
         pythonVersion: '',
         selectedCondaEnvironment: '',
-        imagebindInstalled: false,
+        internvideo2Installed: false,
       };
 
       // Try to load bootstrap config first
@@ -123,7 +123,7 @@ export function registerSettingsHandlers(): void {
           pythonInstalled: false,
           pythonVersion: '',
           selectedCondaEnvironment: '',
-          imagebindInstalled: false,
+          internvideo2Installed: false,
         },
       };
     }

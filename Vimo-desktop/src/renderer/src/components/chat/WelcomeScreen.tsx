@@ -2,6 +2,7 @@ import { Video, Upload } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useServiceContext } from '../../contexts/ServiceContext';
 import { UploadedVideo, VideoAnalysisState } from '../../types/chat';
+import { VideoUpload } from '../VideoUpload';
 
 interface WelcomeScreenProps {
   onVideoUpload: () => void;
@@ -19,8 +20,13 @@ export const WelcomeScreen = ({
 }: WelcomeScreenProps) => {
   const { serviceState, loading } = useServiceContext();
   
-  // Only allow uploading videos when ImageBind is loaded and not in operation
-  const isServiceReady = serviceState.imagebindLoaded && !loading.loadingImageBind && !loading.releasingImageBind;
+  // Check if using remote backend
+  const isRemoteBackend = localStorage.getItem('videorag-backend-config') &&
+    JSON.parse(localStorage.getItem('videorag-backend-config') || '{}').url &&
+    !JSON.parse(localStorage.getItem('videorag-backend-config') || '{}').url.includes('localhost');
+
+  // Allow uploading videos when InternVideo2 is loaded (local) OR when using remote backend
+  const isServiceReady = (serviceState.internvideo2Loaded && !loading.loadingInternVideo2 && !loading.releasingInternVideo2) || isRemoteBackend;
   
 
   
@@ -56,43 +62,62 @@ export const WelcomeScreen = ({
               </h1>
             </div>
 
-            {/* Video Upload Card - Main Feature */}
-            <div
-              className={`bg-white rounded-3xl border-2 border-dashed p-16 transition-all duration-300 group ${
-                isServiceReady 
-                  ? 'border-gray-200 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30' 
-                  : 'border-gray-100 cursor-not-allowed opacity-60'
-              }`}
-              onClick={isServiceReady ? handleClick : undefined}
-            >
-              <div className="flex flex-col items-center">
-                <div className={`w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-6 transition-transform ${
-                  isServiceReady ? 'group-hover:scale-110' : ''
-                }`}>
-                  <Video size={40} className="text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-800 mb-3">
-                  Upload Your Videos
-                </h3>
-                <p className="text-gray-600 mb-8 max-w-lg text-lg">
-                  Upload videos to get started with intelligent video analysis.
-                </p>
-                <Button 
-                  className={`px-8 py-3 rounded-lg font-medium text-lg ${
-                    isServiceReady 
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white' 
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
-                  disabled={!isServiceReady}
-                >
-                  <Upload size={20} className="mr-2" />
-                  Choose Videos
-                </Button>
-                <p className="text-sm text-gray-500 mt-6">
-                  Supported formats: MP4, MOV, AVI, WebM
-                </p>
+            {/* Conditional Upload Interface */}
+            {isRemoteBackend ? (
+              /* Remote Backend Upload - Use VideoUpload component */
+              <div className="max-w-4xl mx-auto">
+                <VideoUpload
+                  onUploadComplete={(result) => {
+                    if (result.success) {
+                      console.log('Upload completed:', result);
+                      // You can handle successful uploads here
+                    }
+                  }}
+                  onProcessComplete={(result) => {
+                    console.log('Process completed:', result);
+                    // You can handle processing completion here
+                  }}
+                />
               </div>
-            </div>
+            ) : (
+              /* Local Backend Upload - Original upload card */
+              <div
+                className={`bg-white rounded-3xl border-2 border-dashed p-16 transition-all duration-300 group ${
+                  isServiceReady
+                    ? 'border-gray-200 cursor-pointer hover:border-blue-300 hover:bg-blue-50/30'
+                    : 'border-gray-100 cursor-not-allowed opacity-60'
+                }`}
+                onClick={isServiceReady ? handleClick : undefined}
+              >
+                <div className="flex flex-col items-center">
+                  <div className={`w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-6 transition-transform ${
+                    isServiceReady ? 'group-hover:scale-110' : ''
+                  }`}>
+                    <Video size={40} className="text-white" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-gray-800 mb-3">
+                    Upload Your Videos
+                  </h3>
+                  <p className="text-gray-600 mb-8 max-w-lg text-lg">
+                    Upload videos to get started with intelligent video analysis.
+                  </p>
+                  <Button
+                    className={`px-8 py-3 rounded-lg font-medium text-lg ${
+                      isServiceReady
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                    disabled={!isServiceReady}
+                  >
+                    <Upload size={20} className="mr-2" />
+                    Choose Videos
+                  </Button>
+                  <p className="text-sm text-gray-500 mt-6">
+                    Supported formats: MP4, MOV, AVI, WebM
+                  </p>
+                </div>
+              </div>
+            )}
 
           </div>
         )}

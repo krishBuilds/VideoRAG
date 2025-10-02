@@ -111,7 +111,7 @@ export class RemoteVideoService {
         });
 
         // Set up and send request
-        xhr.open('POST', `${this.baseUrl}/api/upload/video`);
+        xhr.open('POST', `${this.baseUrl}/api/upload`);
 
         // Add headers
         if (this.apiKey) {

@@ -36,7 +36,7 @@ interface SettingsState {
   storeDirectory: string; // model storage directory
   
   // Initialization tracking
-  imagebindInstalled: boolean;
+  internvideo2Installed: boolean;
 }
 
 const Settings = () => {
@@ -49,7 +49,7 @@ const Settings = () => {
     captionModel: 'qwen-vl-plus-latest',
     asrModel: 'paraformer-realtime-v2',
     storeDirectory: '',
-    imagebindInstalled: false,
+    internvideo2Installed: false,
   });
 
   const [apiConfigStatus, setApiConfigStatus] = useState<
@@ -61,16 +61,16 @@ const Settings = () => {
 // Model Status Section Component
 const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
   const [modelStatus, setModelStatus] = useState<{
-    imagebind: boolean;
+    internvideo2: boolean;
     checking: boolean;
   }>({
-    imagebind: false,
+    internvideo2: false,
     checking: false,
   });
 
   const checkModelStatus = async () => {
     if (!storeDirectory) {
-      setModelStatus(prev => ({ ...prev, imagebind: false }));
+      setModelStatus(prev => ({ ...prev, internvideo2: false }));
       return;
     }
 
@@ -79,12 +79,12 @@ const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
     try {
       const result = await window.api.checkModelFiles(storeDirectory);
       setModelStatus({
-        imagebind: result.imagebind,
+        internvideo2: result.internvideo2,
         checking: false,
       });
     } catch (error) {
       console.error('Failed to check model status:', error);
-      setModelStatus({ imagebind: false, checking: false });
+      setModelStatus({ internvideo2: false, checking: false });
     }
   };
 
@@ -95,13 +95,13 @@ const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
   const getStatusMessage = () => {
     if (!storeDirectory) return 'Please select a storage directory first';
     if (modelStatus.checking) return 'Checking model status...';
-    if (modelStatus.imagebind) return 'Ready to use';
+    if (modelStatus.internvideo2) return 'Ready to use';
     return 'Model not found - run initialization wizard';
   };
 
   const getStatusColor = () => {
-    if (!storeDirectory || !modelStatus.imagebind) return 'text-gray-500';
-    if (modelStatus.imagebind) return 'text-green-600';
+    if (!storeDirectory || !modelStatus.internvideo2) return 'text-gray-500';
+    if (modelStatus.internvideo2) return 'text-green-600';
     return 'text-red-600';
   };
 
@@ -114,16 +114,16 @@ const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h4 className="font-medium">ImageBind Model</h4>
+              <h4 className="font-medium">InternVideo2 Model</h4>
               {modelStatus.checking ? (
                 <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
-              ) : modelStatus.imagebind ? (
+              ) : modelStatus.internvideo2 ? (
                 <CheckCircle className="w-4 h-4 text-green-600" />
               ) : (
                 <XCircle className="w-4 h-4 text-red-600" />
               )}
             </div>
-            <p className="text-xs text-gray-500">~4.5GB • Image Understanding</p>
+            <p className="text-xs text-gray-500">~1.9GB • Video Understanding</p>
             <p className={`text-sm ${getStatusColor()}`}>
               {getStatusMessage()}
             </p>
@@ -460,7 +460,7 @@ const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
                 <div>
                   <CardTitle>AI Model Status</CardTitle>
                   <CardDescription>
-                    Check the status of ImageBind model
+                    Check the status of InternVideo2 model
                   </CardDescription>
                 </div>
               </div>
@@ -498,7 +498,7 @@ const ModelStatusSection = ({ storeDirectory }: { storeDirectory: string }) => {
                   className="w-full px-3 py-2 text-sm border rounded-md bg-gray-50 focus:outline-none"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  Directory for storing AI models (ImageBind) and Vimo cache data
+                  Directory for storing AI models (InternVideo2) and Vimo cache data
                 </p>
               </div>
             </CardContent>
